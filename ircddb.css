@@ -1,0 +1,63 @@
+p {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; font-style: normal; font-weight: normal; color: #000000}
+pre {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; color: #000000}
+body {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #000000;
+	background-attachment: fixed;
+	background-image: url(images/background.jpg); /*add a background image of choice*/
+	background-repeat: no-repeat;
+	background-position: center bottom;
+	background-color: #FFFFFF;
+}
+a:active {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; color: #333333; font-weight: normal}
+a:hover {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; color: #0000FF; font-weight: bold}
+a:link {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; color: #000000; font-weight: normal}
+a:visited {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; color: #666666; font-weight: normal}
+/*H3 and H4 are used in the hotspot.php script, adjust to suit */
+h1 {  font-family: Verdana, Arial, Helvetica, sans-serif; color: #333333; font-size: 36px; font-weight: bold}
+h2 {  font-family: Verdana, Arial, Helvetica, sans-serif; color: #333333; font-size: 24px; font-weight: bold}
+h3 {  font-family: Verdana, Arial, Helvetica, sans-serif; color: #fff600; font-size: 18px; font-weight: bold;}
+h4 {  font-family: Verdana, Arial, Helvetica, sans-serif; color: #333333; font-size: 18px; font-weight: bold}
+h5 {  font-family: Verdana, Arial, Helvetica, sans-serif; color: #333333; font-size: 12px; font-weight: bold}
+h6 {  font-family: Verdana, Arial, Helvetica, sans-serif; color: #000000; font-size: 8px; font-weight: bold}
+
+/* TD is used for the table, to set font, size, etc.*/
+td {	font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; text-align: center}
+
+table {
+background-color: white;
+width: 100%;
+border: none;
+}
+
+tr {
+background-color: #0030ff;
+}
+
+tr.gatewayinfo {
+background-color: #919191;
+}
+
+th {
+color: white;
+font-size: 16px;
+}
+
+th.calls {
+width: 16.7%;
+}
+
+th.gatewayinfo {
+width: 12.5%
+}
+
+tr.row0 {
+background-color: #cdc5c5;
+}
+
+tr.row1 {
+background-color: #919191;
+}
+
+
