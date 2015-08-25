@@ -7,6 +7,7 @@
 <?php linksInfo(); ?>
 <?php //txingInfo(); ?>
 <?php txingInfoAjax(); ?>
+<?php inQSOInfo(); ?>
 <?php lastHeardInfo(); ?>
 <?php lastUsedInfo(); ?>
 <?php footer(); ?>
