@@ -168,9 +168,19 @@ function repeaterInfo() {
       </table>
 <?php
 }
-function linksInfo() {
+function linksInfo($direction = "both") {
+    switch ($direction) {
+    	case "both":
+	    echo "<H4>Links:</H4>"; 
+	    break;
+	case "in":
+	    echo "<H4>Links (incoming):</H4>"; 
+	    break;
+	case "out":
+	    echo "<H4>Links (outgoing):</H4>"; 
+	    break;
+    }
 ?>
-      <H4>Links:</H4> 
       <table>
         <tbody>
           <tr>
@@ -178,7 +188,13 @@ function linksInfo() {
             <th>Linked to</th>
             <th>Link Type</th>
             <th>Protocol</th>
+<?php
+if ($direction == "both") {
+?>
             <th>Direction</th>
+<?php
+}
+?>
             <th>Last Change (UTC)</th>
           </tr>
 <?php 
@@ -186,10 +202,7 @@ function linksInfo() {
     $tr = 0;
     if ($linkLog = fopen(LINKLOGPATH,'r')) {
         while ($linkLine = fgets($linkLog)) {
-        $ci++;
-	 if($ci > 1) { $ci = 0; }
-           print "<tr class=\"row".$ci."\">";
-           $tr++;
+         $ci++;
            $linkDate = "&nbsp;";
            $protocol = "&nbsp;";
            $linkType = "&nbsp;";
@@ -229,13 +242,19 @@ function linksInfo() {
                $linkDest = $linx[4][0];
                $linkDir = $linx[5][0];
            }
- 	    print "<td>$linkSource</td>";
-	    print "<td>$linkDest</td>";
-	    print "<td>$linkType</td>";
-	    print "<td>$protocol</td>";
-	    print "<td>$linkDir</td>";
-	    print "<td>$linkDate</td>";
-	    print "</tr>";
+           if ($direction == "in" && $linkDir == "Incoming" || $direction == "out" && $linkDir == "Outgoing" || $direction == "both" ) {
+	       if($ci > 1) { $ci = 0; }
+               print "<tr class=\"row".$ci."\">";
+               $tr++;
+ 	       print "<td>$linkSource</td>";
+	       print "<td>$linkDest</td>";
+	       print "<td>$linkType</td>";
+	       print "<td>$protocol</td>";
+	       if ($direction == "both")
+	       	   print "<td>$linkDir</td>";
+	       print "<td>$linkDate</td>";
+	       print "</tr>";
+           }
 	}
 	fclose($linkLog);
     }
@@ -247,7 +266,8 @@ function linksInfo() {
     print "<td>&nbsp;</td>";
     print "<td>&nbsp;</td>";
     print "<td>&nbsp;</td>";
-    print "<td>&nbsp;</td>";
+    if ($direction == "both")
+    	print "<td>&nbsp;</td>";
     print "</tr>";
     }
 ?>
@@ -357,7 +377,7 @@ function inQSOInfo() {
 		}
 	    }
 	}
-	fclose($LastTXLog);
+	fclose($QSOInfoLog);
     }
 ?>
         </tbody>

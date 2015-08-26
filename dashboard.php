@@ -4,7 +4,10 @@
 <?php headline(); ?>
 <?php gatewayInfo(); ?>
 <?php repeaterInfo(); ?>
-<?php linksInfo(); ?>
+<?php //linksInfo(); //uncomment this or ... ?>
+<?php linksInfo("both"); //... uncomment this for both directions in one table ?>
+<?php linksInfo("in"); // uncomment this for incomming links in own table ?>
+<?php linksInfo("out"); // uncomment this for outgoing links in own table ?>
 <?php //txingInfo(); ?>
 <?php txingInfoAjax(); ?>
 <?php inQSOInfo(); ?>
