@@ -26,7 +26,6 @@ individual installation of g4klx-software.
 
 How to run:
 -----------
-
 call the script "dashboard.php" in your browser at the specific location 
 on your webserver (e.g. http://your-dstar-hotspot/dashboard.php).
 
@@ -45,6 +44,12 @@ To configure the dashboard open ircddblocal.php in an editor and fit the
 constants' values to your individual fits. You can switch the links to 
 QRZ.com, Google-Maps and APRS.fi on or off by setting the corresponding 
 value to true or false.
+
+Performance-tuning:
+-------------------
+To get more performance into the processing be shure to have the 
+logfiles of the gateway and repeater within a log-rotation. Especially 
+header.log would sometimes grow up into infinitive.
 
 How to get in contact with author:
 ----------------------------------

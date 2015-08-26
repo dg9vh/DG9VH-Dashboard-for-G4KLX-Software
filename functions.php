@@ -1,7 +1,7 @@
 <?php include "ircddblocal.php"; ?>
 <?php
 $progname = "DG9VH - Dashboard for G4KLX ircddb-Gateway";
-$rev = "20150825";
+$rev = "20150826";
 $MYCALL;
 $configs = array();
 
@@ -319,6 +319,7 @@ function inQSOInfo() {
             <th class="calls">Date &amp; Time (UTC)</th>
             <th class="calls">Call</th>
             <th class="calls">Frames (s)</th>
+            <th class="calls">Loss (%)</th>
           </tr>
 <?php // Headers.log sample:
 // 00000000001111111111222222222233333333334444444444555555555566666666667777777777888888888899999999990000000000111111111122
@@ -330,10 +331,11 @@ function inQSOInfo() {
     $ci = 0;
     if ($QSOInfoLog = fopen("/tmp/qsoinfo.log",'r')) {
 	while ($linkLine = fgets($QSOInfoLog)) {
-            if(preg_match_all('/^(.{22}).*Stats for (.*).*Frames: (.*).*s, Loss: (.*)/',$linkLine,$linx) > 0){
+            if(preg_match_all('/^(.{22}).*Stats for (.*).*Frames: (.*).*s, Loss: (.*).*%, Packets:(.*)/',$linkLine,$linx) > 0){
 	        $QSODate = substr($linx[1][0],3,21);
         	$MyCall = substr($linx[2][0],0,8);
                 $Frames = $linx[3][0];
+                $Loss = $linx[4][0];
 		$UTC = new DateTimeZone("UTC");
 		$d1 = new DateTime($QSODate, $UTC);
 		$d2 = new DateTime();
@@ -350,6 +352,7 @@ function inQSOInfo() {
 				print "<td>$MyCall</td>";
 
 			print "<td>$Frames</td>";
+			print "<td>$Loss</td>";
 			print "</tr>";
 		}
 	    }
