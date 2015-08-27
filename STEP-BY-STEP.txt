@@ -105,6 +105,9 @@ You could also do some modifications on the optical presentation of the
 dashboard. If you have css-skills, feel free to modify the stylesheets 
 in ircddb.css.
 
+You can add your personal background-image as "background.jpg" into the 
+"images"-folder.
+
 You can also deactivate or move the infoboxes on the website by 
 modifying the dashboard.php-file. Here you can move or comment/uncomment 
 the lines below the "headline()"-line.

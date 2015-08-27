@@ -2,6 +2,7 @@
 <?php initialize(); ?>
 <?php head(); ?>
 <?php headline(); ?>
+<!-- Start your personal editing here and below -->
 <?php gatewayInfo(); ?>
 <?php repeaterInfo(); ?>
 <?php //linksInfo(); //uncomment this or ... ?>

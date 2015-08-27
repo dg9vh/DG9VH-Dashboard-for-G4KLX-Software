@@ -1,7 +1,7 @@
 <?php include "ircddblocal.php"; ?>
 <?php
 $progname = "DG9VH - Dashboard for G4KLX ircddb-Gateway";
-$rev = "20150826";
+$rev = "20150827-2";
 $MYCALL;
 $configs = array();
 
@@ -169,6 +169,14 @@ function repeaterInfo() {
 <?php
 }
 function linksInfo($direction = "both") {
+    global $configs;
+    $repeaters = array();
+    for($i = 1;$i < 5; $i++){
+      $param="repeaterBand" . $i;
+      if(isset($configs[$param])) {
+	array_push($repeaters, $configs[$param]);
+      }
+    }
     switch ($direction) {
     	case "both":
 	    echo "<H4>Links:</H4>"; 
@@ -189,11 +197,11 @@ function linksInfo($direction = "both") {
             <th>Link Type</th>
             <th>Protocol</th>
 <?php
-if ($direction == "both") {
+    if ($direction == "both") {
 ?>
             <th>Direction</th>
 <?php
-}
+    }
 ?>
             <th>Last Change (UTC)</th>
           </tr>
@@ -202,7 +210,6 @@ if ($direction == "both") {
     $tr = 0;
     if ($linkLog = fopen(LINKLOGPATH,'r')) {
         while ($linkLine = fgets($linkLog)) {
-         $ci++;
            $linkDate = "&nbsp;";
            $protocol = "&nbsp;";
            $linkType = "&nbsp;";
@@ -243,6 +250,9 @@ if ($direction == "both") {
                $linkDir = $linx[5][0];
            }
            if ($direction == "in" && $linkDir == "Incoming" || $direction == "out" && $linkDir == "Outgoing" || $direction == "both" ) {
+	       $position = array_search(substr($linkSource, -1), $repeaters);
+	       unset($repeaters[$position]);
+               $ci++;
 	       if($ci > 1) { $ci = 0; }
                print "<tr class=\"row".$ci."\">";
                $tr++;
@@ -257,6 +267,18 @@ if ($direction == "both") {
            }
 	}
 	fclose($linkLog);
+        foreach ($repeaters AS $repeater) {
+	       $ci++;
+	       if($ci > 1) { $ci = 0; }
+               print "<tr class=\"row".$ci."\">";
+               $tr++;
+ 	       print "<td>".$configs['gatewayCallsign']." ".$repeater."</td>";
+	       $colspan = 4;
+	       if ($direction == "both")
+		       $colspan = 5;
+	       print "<td colspan = ".$colspan.">not connected</td>";
+	       print "</tr>";
+	}
     }
 
     if($tr == 0){

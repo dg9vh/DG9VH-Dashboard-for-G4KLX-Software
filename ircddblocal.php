@@ -7,25 +7,49 @@
 
 define("DISTRIBUTION","MARYLAND");
 //define("DISTRIBUTION","WESTERN");
+//define("DISTRIBUTION","DL5DI");
+//define("DISTRIBUTION","OTHER");
 
-define("LOGPATH", "/var/log");
-
-if (DISTRIBUTION == "MARYLAND") {
+switch (DISTRIBUTION) {
+  case "MARYLAND":
 // Configuration for Maryland-Dstar-Image
+	define("LOGPATH", "/var/log");
 	define("CONFIGPATH", "/etc/gateway");
 	define("DSTARREPEATERLOGPATH", LOGPATH. "/dstarrepeater_1");
 	define("DSTARREPEATERLOGFILENAME", "DStarRepeater_Repeater-1-");
 	define("LINKLOGPATH", LOGPATH . "/gateway/Links.log");
 	define("HRDLOGPATH", LOGPATH . "/gateway/Headers.log");
-} else {
-// Configuration for Western-Dstar-Image or all others, please customize
-// if necessary
+	break;
+  case "WESTERN":
+// Configuration for Western-Dstar-Image
+	define("LOGPATH", "/var/log");
 	define("CONFIGPATH", "/etc");
 	define("DSTARREPEATERLOGPATH", LOGPATH. "/");
 	define("DSTARREPEATERLOGFILENAME", "DStarRepeater-");
 	define("LINKLOGPATH", LOGPATH . "/Links.log");
 	define("HRDLOGPATH", LOGPATH . "/Headers.log");
+	break;
+  case "DL5DI":
+// Configuration for DL5DI-Installation-packages
+	define("LOGPATH", "/var/log/opendv");
+	define("CONFIGPATH", "/home/opendv/ircddbgateway");
+        define("DSTARREPEATERLOGPATH", LOGPATH. "/");
+        define("DSTARREPEATERLOGFILENAME", "DStarRepeater_1-");
+        define("LINKLOGPATH", LOGPATH . "/Links.log");
+        define("HRDLOGPATH", LOGPATH . "/Headers.log");
+	break;
+  case "OTHER":
+// Configuration for all others, please customize
+// if necessary
+	define("LOGPATH", "/var/log");
+	define("CONFIGPATH", "/etc");
+	define("DSTARREPEATERLOGPATH", LOGPATH. "/");
+	define("DSTARREPEATERLOGFILENAME", "DStarRepeater-");
+	define("LINKLOGPATH", LOGPATH . "/Links.log");
+	define("HRDLOGPATH", LOGPATH . "/Headers.log");
+	break;
 }
+
 
 define("CONFIGFILENAME","ircddbgateway");
 define("GATEWAYCONFIGPATH", CONFIGPATH."/".CONFIGFILENAME);
