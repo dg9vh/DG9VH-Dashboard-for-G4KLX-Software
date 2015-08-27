@@ -5,9 +5,9 @@ E-Mail: dg9vh@darc.de
 
 Introduction:
 -------------
-
 This script realizes a dashboard for g4klx-D-Star-Gateways and 
--Repeaters.
+-Repeaters. It is based on the Files introduced at 
+http://www.dstar101.com/dashboard.htm
 
 Installation:
 -------------
@@ -23,6 +23,8 @@ be readable by webserver-user.
 
 Customize ircddblocal.php to your specific needs according to your 
 individual installation of g4klx-software.
+
+For detailled Step-By-Step-Guide see STEP-BY-STEP.txt.
 
 How to run:
 -----------
@@ -53,7 +55,6 @@ header.log would sometimes grow up into infinitive.
 
 How to get in contact with author:
 ----------------------------------
-
 You can reach me by e-mail (see above) or via D-Star (DG9VH), regularly 
 in "DCS001 C" xreflector-room. You could also call me directly in D-Star 
 via CCS7-Number: (262) 5094
