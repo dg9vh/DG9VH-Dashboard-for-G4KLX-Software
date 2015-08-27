@@ -1,0 +1,122 @@
+DG9VH - Dashboard for G4KLX ircddb-Gateway: Step-by-Step-Installation
+=====================================================================
+Author: Kim Huebel, dg9vh
+E-Mail: dg9vh@darc.de
+
+Introduction:
+-------------
+
+Based upon your distribution, there are different ways to install the 
+recommended webserver. This Step-by-Step-Installation-Guide is based on 
+a Raspberry Pi and it's raspbian (debian based) operating system.
+
+Installing Steps:
+-----------------
+
+1. Installing the webserver (lighttpd)
+1.1 Open up a terminal session
+1.2 sudo apt-get update
+1.3 sudo apt-get install lighttpd
+1.4 sudo apt-get install php5-common php5-cgi php5
+1.5 sudo lighty-enable-mod fastcgi-php
+1.6 sudo /etc/init.d/lighttpd force-reload
+
+The following steps should be done for easier file-handling (changing 
+file-permissions to make it easier to copy files and so on): 
+
+1.7 sudo chown -R pi:pi /var/www 
+1.8 chmod og+rx www
+
+2. Now it's time to get the dasboard-files:
+
+2.1 cd /var/www
+2.2 wget https://github.com/dg9vh/DG9VH-Dashboard-for-G4KLX-Software/archive/master.zip
+2.3 unzip master.zip
+
+Now serveral files should be unzipped into a folder called 
+DG9VH-Dashboard-for-G4KLX-Software-master.
+
+If you wish, you could rename the folder with following command:
+
+2.4 mv DG9VH-Dashboard-for-G4KLX-Software-master dashboard
+
+Following steps asume, that 1.12 is done.
+
+2.5 cd /var/www/dashboard
+
+3. Now we start to configure the dashboard to our own needs
+
+3.1 nano ircddblocal.php
+
+Now the configuration-file is opened in an editor. First of all you have 
+to set your distribution of the g4klx-software. Here you got 3 preset 
+configurations and one you could configure to your own wishes.
+
+3.2 To chose one of the configuration-lines simply delete the // before the 
+define-line and set two // in front of the ones you don't want.
+
+For example: You got a DL5DI-installation:
+//define("DISTRIBUTION","MARYLAND");
+//define("DISTRIBUTION","WESTERN");
+define("DISTRIBUTION","DL5DI");
+//define("DISTRIBUTION","OTHER");
+
+If you are using a Western-Dstar-Image:
+//define("DISTRIBUTION","MARYLAND");
+define("DISTRIBUTION","WESTERN");
+//define("DISTRIBUTION","DL5DI");
+//define("DISTRIBUTION","OTHER");
+
+Default-installation is for Maryland-Dstar because of the fact, I am 
+using this image on my personal hotspot.
+
+If you are using not a distribution above, chose "OTHER" and do some customization in the 'case "OTHER":'-part:
+
+  case "OTHER":
+// Configuration for all others, please customize
+// if necessary
+        define("LOGPATH", "/var/log");
+        define("CONFIGPATH", "/etc");
+        define("DSTARREPEATERLOGPATH", LOGPATH. "/");
+        define("DSTARREPEATERLOGFILENAME", "DStarRepeater-");
+        define("LINKLOGPATH", LOGPATH . "/Links.log");
+        define("HRDLOGPATH", LOGPATH . "/Headers.log");
+        break;
+}
+
+3.3 All other values are described within the configuration-file and could 
+be modified to your own wishes.
+
+After all, your dashboard should be availiable on the hotspot like:
+http://hotspot-hostname/dashboard/dashboard.php
+
+4. Modifying webserver-configuration for easier access in webbrowser 
+(shorter URL):
+
+4.1 sudo nano /etc/lighttpd/lighttpd.conf
+4.2 server.document-root        = "/var/www/dashboard"
+4.3 index-file.names            = ( "dashboard.php", "index.php", "index.html", "index.lighttpd.html" )
+
+After this, the dashboard would be reachable under http://hotspot-hostname/
+
+5. Modifying the dashboard itself 
+
+You could also do some modifications on the optical presentation of the 
+dashboard. If you have css-skills, feel free to modify the stylesheets 
+in ircddb.css.
+
+You can also deactivate or move the infoboxes on the website by 
+modifying the dashboard.php-file. Here you can move or comment/uncomment 
+the lines below the "headline()"-line.
+
+Use as comments those you can use in standard-php-code: // or /* ... */, 
+where ... is the function-call.
+
+How to get in contact with author:
+----------------------------------
+
+You can reach me by e-mail (see above) or via D-Star (DG9VH), regularly 
+in "DCS001 C" xreflector-room. You could also call me directly in D-Star 
+via CCS7-Number: (262) 5094
+
+Comments and constructive ideas wellcome!
