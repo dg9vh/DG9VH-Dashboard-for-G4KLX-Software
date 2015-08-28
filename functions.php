@@ -1,7 +1,7 @@
 <?php include "ircddblocal.php"; ?>
 <?php
 $progname = "DG9VH - Dashboard for G4KLX ircddb-Gateway";
-$rev = "20150827-2";
+$rev = "201508281-1";
 $MYCALL;
 $configs = array();
 
@@ -334,7 +334,7 @@ function txingInfo() {
 		print "<td>$QSODate</td>";
 
 		if (SHOWQRZ)
-			print "<td><a title=\"Ask QRZ.com about $MyCall\" href=\"http://qrz.com/db/$MyCall\">$MyCall</a></td>";
+			print "<td><a title=\"Ask QRZ.com about $MyCall\" href=\"http://qrz.com/db/$MyCall\">".trim($MyCall)."</a></td>";
 		else
 			print "<td>$MyCall</td>";
 
@@ -389,7 +389,7 @@ function inQSOInfo() {
 			print "<td>$QSODate</td>";
 
 			if (SHOWQRZ)
-				print "<td><a title=\"Ask QRZ.com about $MyCall\" href=\"http://qrz.com/db/$MyCall\">$MyCall</a></td>";
+				print "<td><a title=\"Ask QRZ.com about $MyCall\" href=\"http://qrz.com/db/$MyCall\">".trim($MyCall)."</a></td>";
 			else
 				print "<td>$MyCall</td>";
 
@@ -499,7 +499,7 @@ function lastHeardInfo() {
 		print "<td>$QSODate</td>";
 
 		if (SHOWQRZ)
-			print "<td><a title=\"Ask QRZ.com about $MyCall\" href=\"http://qrz.com/db/$MyCall\">$MyCall</a>";
+			print "<td><a title=\"Ask QRZ.com about $MyCall\" href=\"http://qrz.com/db/$MyCall\">".trim($MyCall)."</a>";
 		else
 			print "<td>$MyCall";
 
