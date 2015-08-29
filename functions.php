@@ -1,9 +1,34 @@
 <?php include "ircddblocal.php"; ?>
 <?php
 $progname = "DG9VH - Dashboard for G4KLX ircddb-Gateway";
-$rev = "20150829-2";
+$rev = "20150829-3";
 $MYCALL;
 $configs = array();
+
+function format_time($seconds) {
+  $secs = intval($seconds % 60);
+  $mins = intval($seconds / 60 % 60);
+  $hours = intval($seconds / 3600 % 24);
+  $days = intval($seconds / 86400);
+  
+  if ($days > 0) {
+    $uptimeString .= $days;
+    $uptimeString .= (($days == 1) ? " day" : " days");
+  }
+  if ($hours > 0) {
+    $uptimeString .= (($days > 0) ? ", " : "") . $hours;
+    $uptimeString .= (($hours == 1) ? " hour" : " hours");
+  }
+  if ($mins > 0) {
+    $uptimeString .= (($days > 0 || $hours > 0) ? ", " : "") . $mins;
+    $uptimeString .= (($mins == 1) ? " minute" : " minutes");
+  }
+  if ($secs > 0) {
+    $uptimeString .= (($days > 0 || $hours > 0 || $mins > 0) ? ", " : "") . $secs;
+    $uptimeString .= (($secs == 1) ? " second" : " seconds");
+  }
+  return $uptimeString;
+}
 
 function initialize() {
   global $configs;
@@ -123,8 +148,8 @@ $output = shell_exec('cat /proc/loadavg');
 $cpuload = substr($output,0,strpos($output," "))*100; 
 
 $output = shell_exec('cat /proc/uptime');
-$uptime = gmdate("H:i:s",substr($output,0,strpos($output," ")));
-$idletime = gmdate("H:i:s",substr($output,strpos($output," ")));
+$uptime = format_time(substr($output,0,strpos($output," ")));
+$idletime = format_time(substr($output,strpos($output," ")));
 
 ?>
       <h4>System Info:</h4>
