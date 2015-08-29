@@ -1,7 +1,7 @@
 <?php include "ircddblocal.php"; ?>
 <?php
 $progname = "DG9VH - Dashboard for G4KLX ircddb-Gateway";
-$rev = "201508281-1";
+$rev = "20150829-1";
 $MYCALL;
 $configs = array();
 
