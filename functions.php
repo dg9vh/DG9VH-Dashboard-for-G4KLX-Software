@@ -1,7 +1,7 @@
 <?php include "ircddblocal.php"; ?>
 <?php
 $progname = "DG9VH - Dashboard for G4KLX ircddb-Gateway";
-$rev = "20150829-1";
+$rev = "20150829-2";
 $MYCALL;
 $configs = array();
 
@@ -120,7 +120,7 @@ $cputemp = $cputemp[0] / 1000;
 $cpufreq = $cpufreq[0] / 1000;
 
 $output = shell_exec('cat /proc/loadavg');
-$cpuload = substr($output,0,strpos($output," ")); 
+$cpuload = substr($output,0,strpos($output," "))*100; 
 ?>
       <h4>System Info:</h4>
       <table>
