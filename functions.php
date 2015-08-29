@@ -121,6 +121,11 @@ $cpufreq = $cpufreq[0] / 1000;
 
 $output = shell_exec('cat /proc/loadavg');
 $cpuload = substr($output,0,strpos($output," "))*100; 
+
+$output = shell_exec('cat /proc/uptime');
+$uptime = gmdate("H:i:s",substr($output,0,strpos($output," ")));
+$idletime = gmdate("H:i:s",substr($output,strpos($output," ")));
+
 ?>
       <h4>System Info:</h4>
       <table>
@@ -129,11 +134,15 @@ $cpuload = substr($output,0,strpos($output," "))*100;
             <th>CPU-Temperature</th>
             <th>CPU-Frequence</th>
             <th>CPU-Load</th>
+            <th>Uptime</th>
+            <th>Idle</th>
           </tr>
           <tr class="gatewayinfo">
             <td><?php echo $cputemp; ?> &deg;C</td>
             <td><?php echo $cpufreq; ?> MHz</td>
             <td><?php echo $cpuload; ?> %</td>
+            <td><?php echo $uptime; ?></td>
+            <td><?php echo $idletime; ?></td>
           </tr>
         </tbody>
       </table>
