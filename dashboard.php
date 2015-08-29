@@ -4,7 +4,7 @@
 <?php headline(); ?>
 <!-- Start your personal editing here and below -->
 <?php gatewayInfo(); ?>
-<?php systemInfo(); ?>
+<?php systemInfo(); // only working on Linux-systems ?>
 <?php repeaterInfo(); ?>
 <?php //linksInfo(); //uncomment this or ... ?>
 <?php linksInfo("both"); //... uncomment this for both directions in one table ?>
