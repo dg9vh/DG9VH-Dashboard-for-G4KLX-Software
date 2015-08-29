@@ -112,6 +112,34 @@ function gatewayInfo() {
       </table>
 <?php
 }
+
+function systemInfo() {
+exec("cat /sys/class/thermal/thermal_zone0/temp", $cputemp);
+exec("cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq", $cpufreq);
+$cputemp = $cputemp[0] / 1000;
+$cpufreq = $cpufreq[0] / 1000;
+
+$output = shell_exec('cat /proc/loadavg');
+$cpuload = substr($output,0,strpos($output," ")); 
+?>
+      <h4>System Info:</h4>
+      <table>
+        <tbody>
+          <tr>
+            <th>CPU-Temperature</th>
+            <th>CPU-Frequence</th>
+            <th>CPU-Load</th>
+          </tr>
+          <tr class="gatewayinfo">
+            <td><?php echo $cputemp; ?> &deg;C</td>
+            <td><?php echo $cpufreq; ?> MHz</td>
+            <td><?php echo $cpuload; ?> %</td>
+          </tr>
+        </tbody>
+      </table>
+<?php
+}
+
 function repeaterInfo() {
   global $configs;
 ?>
