@@ -25,7 +25,7 @@ The following steps should be done for easier file-handling (changing
 file-permissions to make it easier to copy files and so on): 
 
 1.7 sudo chown -R pi:pi /var/www 
-1.8 chmod og+rx www
+1.8 chmod og+rx /var/www
 
 2. Now it's time to get the dasboard-files:
 
