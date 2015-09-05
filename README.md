@@ -53,11 +53,11 @@ To get more performance into the processing be shure to have the
 logfiles of the gateway and repeater within a log-rotation. Especially 
 header.log would sometimes grow up into infinitive.
 
-How to get in contact with author:
-----------------------------------
+How to get in contact with author: 
+---------------------------------- 
 You can reach me by e-mail (see above) or via D-Star (DG9VH), regularly 
-in "DCS001 C" xreflector-room. You could also call me directly in D-Star 
-via CCS7-Number: (262) 5094
+in "DCS001 C" or "XRF232 A" xreflector-room. You could also call me 
+directly in D-Star via CCS7-Number: (262) 5094
 
 Comments and constructive ideas wellcome!
 
