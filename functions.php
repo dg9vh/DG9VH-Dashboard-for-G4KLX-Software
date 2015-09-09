@@ -13,19 +13,19 @@ function format_time($seconds) {
   
   if ($days > 0) {
     $uptimeString .= $days;
-    $uptimeString .= (($days == 1) ? " day" : " days");
+    $uptimeString .= (($days == 1) ? "&nbsp;day" : "&nbsp;days");
   }
   if ($hours > 0) {
     $uptimeString .= (($days > 0) ? ", " : "") . $hours;
-    $uptimeString .= (($hours == 1) ? " hour" : " hours");
+    $uptimeString .= (($hours == 1) ? "&nbsp;hour" : "&nbsp;hours");
   }
   if ($mins > 0) {
     $uptimeString .= (($days > 0 || $hours > 0) ? ", " : "") . $mins;
-    $uptimeString .= (($mins == 1) ? " minute" : " minutes");
+    $uptimeString .= (($mins == 1) ? "&nbsp;minute" : "&nbsp;minutes");
   }
   if ($secs > 0) {
     $uptimeString .= (($days > 0 || $hours > 0 || $mins > 0) ? ", " : "") . $secs;
-    $uptimeString .= (($secs == 1) ? " second" : " seconds");
+    $uptimeString .= (($secs == 1) ? "&nbsp;second" : "&nbsp;seconds");
   }
   return $uptimeString;
 }
