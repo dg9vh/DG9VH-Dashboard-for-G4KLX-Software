@@ -47,8 +47,9 @@ function initialize() {
 function head() {
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="de">
   <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta name="robots" content="index">
       <meta name="robots" content="follow">
       <meta name="language" content="English">
@@ -64,6 +65,15 @@ function head() {
    global $MYCALL;
    echo "$MYCALL" ?></title>
       <link rel="stylesheet" type="text/css" href="ircddb.css">
+      <!-- Das neueste kompilierte und minimierte CSS -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+      <!-- Optionales Theme -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+      <!-- Das neueste kompilierte und minimierte JavaScript -->
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
       <meta http-equiv="refresh" content="60">
     </head>
     <body>
@@ -88,7 +98,7 @@ function gatewayInfo() {
   global $configs;
 ?>
       <H4>Gateway:</H4>
-      <table>
+      <table class="table-bordered">
         <tbody>
           <tr>
             <th>Location</th>
@@ -108,7 +118,7 @@ function gatewayInfo() {
           </tr>
         </tbody>
       </table>
-      <table>
+      <table class="table-bordered">
         <tbody>
           <tr>
             <th class="gatewayinfo">ircddb</th>
@@ -153,7 +163,7 @@ $idletime = format_time(substr($output,strpos($output," ")));
 
 ?>
       <h4>System Info:</h4>
-      <table>
+      <table class="table-bordered">
         <tbody>
           <tr>
             <th>CPU-Temperature</th>
@@ -178,7 +188,7 @@ function repeaterInfo() {
   global $configs;
 ?>
       <H4>Repeaters:</H4>
-      <table>
+      <table class="table-bordered">
         <tbody>
           <tr>
             <th>Repeater</th>
@@ -251,7 +261,7 @@ function linksInfo($direction = "both") {
 	    break;
     }
 ?>
-      <table>
+      <table class="table-bordered">
         <tbody>
           <tr>
             <th>Repeater</th>
@@ -363,7 +373,7 @@ function linksInfo($direction = "both") {
 function txingInfo() {
 ?>
       <H4>Currently transmitting:</H4>
-      <table>
+      <table class="table-bordered">
         <tbody>
           <tr>
             <th class="calls">Date &amp; Time (UTC)</th>
@@ -417,7 +427,7 @@ function txingInfo() {
 function inQSOInfo() {
 ?>
       <H4>Currently maybe in QSO:</H4>
-      <table>
+      <table class="table-bordered">
         <tbody>
           <tr>
             <th class="calls">Date &amp; Time (UTC)</th>
@@ -472,7 +482,7 @@ function inQSOInfo() {
 function txingInfoAjax() {
 ?>
       <H4>Currently transmitting:</H4>
-      <table>
+      <table class="table-bordered">
         <tbody>
           <tr>
             <th class="calls">Date &amp; Time (UTC)</th>
@@ -526,7 +536,7 @@ function lastHeardInfo() {
   global $MYCALL;
 ?>
       <H4>Last 15 calls heard on <?php echo "$MYCALL" ?>:</H4>
-      <table>
+      <table class="table-bordered">
         <tbody>
           <tr>
             <th class="calls">Date &amp; Time (UTC)</th>
@@ -593,7 +603,7 @@ function lastUsedInfo() {
   global $MYCALL;
 ?>
       <H4>Last calls that used <?php echo "$MYCALL" ?>:</H4>
-      <table>
+      <table class="table-bordered">
         <tbody>
           <tr>
             <th class="calls">Date &amp; Time (UTC)</th>
