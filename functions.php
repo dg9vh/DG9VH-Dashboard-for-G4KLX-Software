@@ -167,7 +167,7 @@ $idletime = format_time(substr($output,strpos($output," ")));
         <tbody>
           <tr>
             <th>CPU-Temperature</th>
-            <th>CPU-Frequence</th>
+            <th>CPU-Frequency</th>
             <th>CPU-Load</th>
             <th>Uptime</th>
             <th>Idle</th>
