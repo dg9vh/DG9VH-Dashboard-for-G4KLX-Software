@@ -1,7 +1,7 @@
 <?php include "ircddblocal.php"; ?>
 <?php
 $progname = "DG9VH - Dashboard for G4KLX ircddb-Gateway";
-$rev = "20150909-1";
+$rev = "20150914-1";
 $MYCALL;
 $configs = array();
 
@@ -599,6 +599,7 @@ function lastHeardInfo() {
       </table>
 <?php
 }
+
 function lastUsedInfo() {
   global $MYCALL;
 ?>
@@ -649,6 +650,72 @@ function lastUsedInfo() {
       </table>
 <?php
 }
+
+function remoteControl() {
+    global $configs;
+    $repeaters = array();
+    for($i = 1;$i < 5; $i++){
+      $param="repeaterBand" . $i;
+      if(isset($configs[$param])) {
+        array_push($repeaters, $configs[$param]);
+      }
+    }
+?>
+  <h4>Remote Control:</h4>
+  <p>
+    <form action="javascript:loadRemoteControlXMLDoc()">
+      Repeater: 
+      <select id="repeater">
+<?php
+        foreach ($repeaters AS $repeater) {
+	       $repeatercallsign = $configs['gatewayCallsign'];
+               $callsignlength = strlen($repeatercallsign);
+               for ($i = $callsignlength; $i < 7 ; $i++) 
+                   $repeatercallsign .=" ";
+               $repeatercallsign = $repeatercallsign.$repeater;
+               print "<option value=\"".$repeatercallsign."\">".$repeatercallsign."</option>";
+        }
+
+?>
+     </select>
+      Link Target: <input type="text" id="target">
+      Password: <input type="password" id="passwd">
+      <input type="submit">
+    </form>
+    <div class="alert alert-success" role="alert" id="target_alert"></div>
+  </p>
+<script>
+function loadRemoteControlXMLDoc()
+{
+var xmlhttp;
+if (window.XMLHttpRequest)
+  {// code for IE7+, Firefox, Chrome, Opera, Safari
+  xmlhttp=new XMLHttpRequest();
+  }
+else
+  {// code for IE6, IE5
+  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+xmlhttp.onreadystatechange=function()
+  {
+  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("target_alert").innerHTML=xmlhttp.responseText;
+    }
+  }
+xmlhttp.open("POST","remotewrapper.php",true);
+xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+xmlhttp.send("REPEATER="+document.getElementById("repeater").value+"&TARGET="+document.getElementById("target").value+"&PASSWD="+document.getElementById("passwd").value);
+var timeout = window.setTimeout("loadXMLDoc()", <?php echo RELOADTIMEINMS; ?>);
+}
+
+
+loadXMLDoc();
+</script>
+
+<?php
+}
+
 function footer() {
 ?>
   <p>

@@ -10,6 +10,7 @@
 <?php //linksInfo("both"); //... uncomment this for both directions in one table ?>
 <?php linksInfo("in"); // uncomment this for incomming links in own table ?>
 <?php linksInfo("out"); // uncomment this for outgoing links in own table ?>
+<?php remoteControl(); // see comment in ircddblocal.php ?>
 <?php //txingInfo(); ?>
 <?php txingInfoAjax(); ?>
 <?php inQSOInfo(); ?>

@@ -72,4 +72,11 @@ define("SHOWQRZ", true);
 // set to your individual refesh-time of "current-TX-infobox"
 // time is given in ms - so 1 second = 1000 ms, default: 1000
 define("RELOADTIMEINMS","1000");
+
+// set to your remote-password
+// if you want to use this feature, you have also to add following line
+// into /etc/sudoers:
+// www-data ALL=(ALL) NOPASSWD: ALL
+define("REMOTECONTROLPASSWD","mypass");
+
 ?>
