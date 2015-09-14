@@ -1,7 +1,7 @@
 <?php include "ircddblocal.php"; ?>
 <?php
 $progname = "DG9VH - Dashboard for G4KLX ircddb-Gateway";
-$rev = "20150914-2";
+$rev = "20150914-3";
 $MYCALL;
 $configs = array();
 
@@ -676,9 +676,9 @@ function remoteControl() {
         }
 
 ?>
-     </select>
-      Link Target:&nbsp;<input type="text" id="target">
-      Password:&nbsp;<input type="password" id="passwd">
+     </select><br>
+      Link Target:&nbsp;<input type="text" id="target"><br>
+      Password:&nbsp;<input type="password" id="passwd"><br>
       <input type="submit">
     </form>
     <div class="alert alert-success" role="alert" id="target_alert"></div>
