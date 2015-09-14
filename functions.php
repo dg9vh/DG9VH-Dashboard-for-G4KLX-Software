@@ -1,7 +1,7 @@
 <?php include "ircddblocal.php"; ?>
 <?php
 $progname = "DG9VH - Dashboard for G4KLX ircddb-Gateway";
-$rev = "20150914-1";
+$rev = "20150914-2";
 $MYCALL;
 $configs = array();
 
@@ -664,8 +664,7 @@ function remoteControl() {
   <h4>Remote Control:</h4>
   <p>
     <form action="javascript:loadRemoteControlXMLDoc()">
-      Repeater: 
-      <select id="repeater">
+      Repeater:&nbsp;<select id="repeater">
 <?php
         foreach ($repeaters AS $repeater) {
 	       $repeatercallsign = $configs['gatewayCallsign'];
@@ -678,8 +677,8 @@ function remoteControl() {
 
 ?>
      </select>
-      Link Target: <input type="text" id="target">
-      Password: <input type="password" id="passwd">
+      Link Target:&nbsp;<input type="text" id="target">
+      Password:&nbsp;<input type="password" id="passwd">
       <input type="submit">
     </form>
     <div class="alert alert-success" role="alert" id="target_alert"></div>
