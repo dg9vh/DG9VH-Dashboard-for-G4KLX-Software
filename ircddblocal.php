@@ -79,4 +79,12 @@ define("RELOADTIMEINMS","1000");
 // www-data ALL=(ALL) NOPASSWD: ALL
 define("REMOTECONTROLPASSWD","mypass");
 
+// edit your preset-link-targets, first value = name, second value = URCALL
+// feel free to add as many targets as you like
+$presettargets = array(
+	"Deutschland"=>"DCS001 C",
+	"Saarland"=>"DCS002 S",
+	"XRF262"=>"XRF262 A",
+	"Echo"=>"DCS001 Z",
+);
 ?>

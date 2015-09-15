@@ -87,6 +87,10 @@ If you are using not a distribution above, chose "OTHER" and do some customizati
 3.3 All other values are described within the configuration-file and could 
 be modified to your own wishes.
 
+3.4 If you are enabling the remotecontrol-Section be sure to have 
+remotecontrold configured well. The remotecontrol-Application of the 
+g4klx-software has to work fully functionally for using this section.
+
 After all, your dashboard should be availiable on the hotspot like:
 http://hotspot-hostname/dashboard/dashboard.php
 

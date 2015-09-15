@@ -5,6 +5,7 @@ $rev = "20150914-3";
 $MYCALL;
 $configs = array();
 
+echo $rm1;
 function format_time($seconds) {
   $secs = intval($seconds % 60);
   $mins = intval($seconds / 60 % 60);
@@ -652,7 +653,7 @@ function lastUsedInfo() {
 }
 
 function remoteControl() {
-    global $configs;
+    global $configs, $presettargets;
     $repeaters = array();
     for($i = 1;$i < 5; $i++){
       $param="repeaterBand" . $i;
@@ -662,9 +663,13 @@ function remoteControl() {
     }
 ?>
   <h4>Remote Control:</h4>
-  <p>
     <form action="javascript:loadRemoteControlXMLDoc()">
-      Repeater:&nbsp;<select id="repeater">
+      <table class="table-bordered">
+        <tbody>
+          <tr>
+            <th class="calls">Repeater:</th>
+            <td><select id="repeater" style="width: 150px">
+
 <?php
         foreach ($repeaters AS $repeater) {
 	       $repeatercallsign = $configs['gatewayCallsign'];
@@ -676,10 +681,32 @@ function remoteControl() {
         }
 
 ?>
-     </select><br>
-      Link Target:&nbsp;<input type="text" id="target"><br>
-      Password:&nbsp;<input type="password" id="passwd"><br>
-      <input type="submit">
+            </select></td>
+          </tr>
+          <tr>
+            <th class="calls">Link-Target:</th>
+            <td><input type="text" id="target" style="width: 150px"></td>
+          </tr>
+          <tr>
+            <th class="calls">Preset-Target:</th>
+            <td><select id="presettarget" style="width: 150px">
+                  <option value="">please chose</option>
+<?php
+	foreach($presettargets as $pretgt => $x_value) {
+		echo "<option value=\"".$x_value."\">".$pretgt."</option>";
+	}
+?>
+            </select></td>
+          </tr>
+          <tr>
+            <th class="calls">Password:</th>
+            <td><input type="password" id="passwd" style="width: 150px"></td>
+          </tr>
+          <tr>
+            <td colspan ="2"><input type="submit"></td>
+          </tr>
+        </tbody>
+      </table>
     </form>
     <div class="alert alert-success" role="alert" id="target_alert"></div>
   </p>
@@ -704,7 +731,13 @@ xmlhttp.onreadystatechange=function()
   }
 xmlhttp.open("POST","remotewrapper.php",true);
 xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-xmlhttp.send("REPEATER="+document.getElementById("repeater").value+"&TARGET="+document.getElementById("target").value+"&PASSWD="+document.getElementById("passwd").value);
+var parameters;
+if (document.getElementById("presettarget").value == "") 
+  parameters = "REPEATER="+document.getElementById("repeater").value+"&TARGET="+document.getElementById("target").value+"&PASSWD="+document.getElementById("passwd").value;
+else
+  parameters = "REPEATER="+document.getElementById("repeater").value+"&TARGET="+document.getElementById("presettarget").value+"&PASSWD="+document.getElementById("passwd").value;
+
+xmlhttp.send(parameters);
 var timeout = window.setTimeout("loadXMLDoc()", <?php echo RELOADTIMEINMS; ?>);
 }
 
