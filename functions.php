@@ -1,11 +1,10 @@
 <?php include "ircddblocal.php"; ?>
 <?php
 $progname = "DG9VH - Dashboard for G4KLX ircddb-Gateway";
-$rev = "20150914-3";
+$rev = "20150915-2";
 $MYCALL;
 $configs = array();
 
-echo $rm1;
 function format_time($seconds) {
   $secs = intval($seconds % 60);
   $mins = intval($seconds / 60 % 60);
