@@ -1,7 +1,7 @@
 <?php include "ircddblocal.php"; ?>
 <?php
 $progname = "DG9VH - Dashboard for G4KLX ircddb-Gateway";
-$rev = "20150915-2";
+$rev = "20150915-3";
 $MYCALL;
 $configs = array();
 
@@ -708,7 +708,6 @@ function remoteControl() {
       </table>
     </form>
     <div class="alert alert-success" role="alert" id="target_alert"></div>
-  </p>
 <script>
 function loadRemoteControlXMLDoc()
 {
