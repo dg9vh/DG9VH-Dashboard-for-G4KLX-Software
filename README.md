@@ -53,6 +53,15 @@ To get more performance into the processing be shure to have the
 logfiles of the gateway and repeater within a log-rotation. Especially 
 header.log would sometimes grow up into infinitive.
 
+A few words about security:
+---------------------------
+It is recommended by the author not to allow public access on the 
+webserver of the hotspot in case of using tx-info or remote-control. 
+This functions could produce high system load and could be used to abuse 
+the system or to disurb functionality.
+
+Be sure to use a strong password in remote-control!
+
 How to get in contact with author: 
 ---------------------------------- 
 You can reach me by e-mail (see above) or via D-Star (DG9VH), regularly 
