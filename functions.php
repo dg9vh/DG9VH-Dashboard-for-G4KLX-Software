@@ -1,7 +1,6 @@
 <?php include "ircddblocal.php"; ?>
 <?php
 $progname = "DG9VH - Dashboard for G4KLX ircddb-Gateway";
-$rev = "20150915-3";
 $MYCALL;
 $configs = array();
 
@@ -55,8 +54,8 @@ function head() {
       <meta name="language" content="English">
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <?php
-  global $progname, $rev;
-  echo "<meta name=\"GENERATOR\" content=\"$progname $rev\">";
+  global $progname;
+  echo "<meta name=\"GENERATOR\" content=\"$progname\">";
     ?>
       <meta name="Author" content="Origin: Hans-J. Barthen (DL5DI), Changed/adapted for non ircddb registered Gateways by Hans Hommes (PE1AGO), modified by Kim Huebel (DG9VH)">
       <meta name="Description" content="ircDDBGateway Dashboard">
