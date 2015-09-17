@@ -155,7 +155,10 @@ $cputemp = $cputemp[0] / 1000;
 $cpufreq = $cpufreq[0] / 1000;
 
 $output = shell_exec('cat /proc/loadavg');
-$cpuload = substr($output,0,strpos($output," "))*100; 
+$sysload = substr($output,0,strpos($output," "))*100; 
+
+$output = shell_exec("grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print usage}'");
+$cpuusage = round($output, 2); 
 
 $output = shell_exec('cat /proc/uptime');
 $uptime = format_time(substr($output,0,strpos($output," ")));
@@ -168,14 +171,16 @@ $idletime = format_time(substr($output,strpos($output," ")));
           <tr>
             <th>CPU-Temperature</th>
             <th>CPU-Frequency</th>
-            <th>CPU-Load</th>
+            <th>System-Load</th>
+            <th>CPU-Usage</th>
             <th>Uptime</th>
             <th>Idle</th>
           </tr>
           <tr class="gatewayinfo">
             <td><?php echo $cputemp; ?> &deg;C</td>
             <td><?php echo $cpufreq; ?> MHz</td>
-            <td><?php echo $cpuload; ?> %</td>
+            <td><?php echo $sysload; ?> %</td>
+            <td><?php echo $cpuusage; ?> %</td>
             <td><?php echo $uptime; ?></td>
             <td><?php echo $idletime; ?></td>
           </tr>
