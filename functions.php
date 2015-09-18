@@ -9,7 +9,8 @@ function format_time($seconds) {
   $mins = intval($seconds / 60 % 60);
   $hours = intval($seconds / 3600 % 24);
   $days = intval($seconds / 86400);
-  
+  $uptimeString = "";
+
   if ($days > 0) {
     $uptimeString .= $days;
     $uptimeString .= (($days == 1) ? "&nbsp;day" : "&nbsp;days");
