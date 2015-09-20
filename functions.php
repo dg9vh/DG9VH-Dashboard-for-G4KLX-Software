@@ -702,6 +702,20 @@ function remoteControl() {
 ?>
             </select></td>
           </tr>
+	  <tr>
+            <th class="calls">Reconnect after:</th>
+            <td>
+              <select id="reconnect" style="width: 150px">
+		<option value="5">5 minutes</option>
+		<option value="10">10 minutes</option>
+		<option value="15">15 minutes</option>
+		<option value="20">20 minutes</option>
+		<option value="25">25 minutes</option>
+		<option value="30">30 minutes</option>
+		<option value="NEVER">never</option>
+              </select>
+            </td>
+          </tr>
           <tr>
             <th class="calls">Password:</th>
             <td><input type="password" id="passwd" style="width: 150px"></td>
@@ -736,9 +750,9 @@ xmlhttp.open("POST","remotewrapper.php",true);
 xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 var parameters;
 if (document.getElementById("presettarget").value == "") 
-  parameters = "REPEATER="+document.getElementById("repeater").value+"&TARGET="+document.getElementById("target").value+"&PASSWD="+document.getElementById("passwd").value;
+  parameters = "REPEATER="+document.getElementById("repeater").value+"&TARGET="+document.getElementById("target").value+"&PASSWD="+document.getElementById("passwd").value+"&RECONNECT="+document.getElementById("reconnect").value;
 else
-  parameters = "REPEATER="+document.getElementById("repeater").value+"&TARGET="+document.getElementById("presettarget").value+"&PASSWD="+document.getElementById("passwd").value;
+  parameters = "REPEATER="+document.getElementById("repeater").value+"&TARGET="+document.getElementById("presettarget").value+"&PASSWD="+document.getElementById("passwd").value+"&RECONNECT="+document.getElementById("reconnect").value;
 
 xmlhttp.send(parameters);
 var timeout = window.setTimeout("loadXMLDoc()", <?php echo RELOADTIMEINMS; ?>);
