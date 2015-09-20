@@ -391,7 +391,7 @@ function txingInfo() {
 // M: 2015-08-18 19:23:48: Transmitting to - My: DL1ESZ	/5100	Your: CQCQCQ		Rpt1: DG9VH	G	Rpt2: DG9VH	B	Flags: 00 00 00
 // M: 2015-08-18 19:24:40: Stats for DL1ESZ		Frames: 17.8s, Loss: 1.2%, Packets: 11/890
 
-	exec('(grep -v "	/TIME" '.DSTARREPEATERLOGPATH.'/'.DSTARREPEATERLOGFILENAME.'$(date --utc +%Y-%m-%d).log|sort -r -k7,7|sort -u -k7,8|sort -r|head -1 >/tmp/lasttxing.log) 2>&1 &');
+	exec('(grep -v " /TIME" '.DSTARREPEATERLOGPATH.'/'.DSTARREPEATERLOGFILENAME.'$(date --utc +%Y-%m-%d).log|sort -r -k7,7|sort -u -k7,8|sort -r|head -1 >/tmp/lasttxing.log) 2>&1 &');
 	$ci = 0;
 	if ($LastTXLog = fopen("/tmp/lasttxing.log",'r')) {
 		while ($linkLine = fgets($LastTXLog)) {
@@ -443,7 +443,7 @@ function inQSOInfo() {
 // M: 2015-08-18 19:23:48: Transmitting to - My: DL1ESZ	/5100	Your: CQCQCQ		Rpt1: DG9VH	G	Rpt2: DG9VH	B	Flags: 00 00 00
 // M: 2015-08-18 19:24:40: Stats for DL1ESZ		Frames: 17.8s, Loss: 1.2%, Packets: 11/890
 //sort -u -k6,7|
-	exec('(grep -v "	/TIME" '.DSTARREPEATERLOGPATH.'/'.DSTARREPEATERLOGFILENAME.'$(date --utc +%Y-%m-%d).log|grep Stats|sort -r -k3,9 |sort -u -k6,6|sort -r|head -10 >/tmp/qsoinfo.log) 2>&1 &');
+	exec('(grep -v " /TIME" '.DSTARREPEATERLOGPATH.'/'.DSTARREPEATERLOGFILENAME.'$(date --utc +%Y-%m-%d).log|grep Stats|sort -r -k3,9 |sort -u -k6,6|sort -r|head -10 >/tmp/qsoinfo.log) 2>&1 &');
 	$ci = 0;
 	if ($QSOInfoLog = fopen("/tmp/qsoinfo.log",'r')) {
 		while ($linkLine = fgets($QSOInfoLog)) {
@@ -549,7 +549,7 @@ function lastHeardInfo() {
 // 2013-02-09 13:49:57: DExtra header - My: DO7MT	 /			Your: CQCQCQ		Rpt1: XRF001 G	Rpt2: XRF001 C	Flags: 00 00 00
 //
 
-	exec('(grep -v "	/TIME" '.HRDLOGPATH.'|sort -r -k7,7|sort -u -k7,8|sort -r|head -15 >/tmp/lastheard.log) 2>&1 &');
+	exec('(grep -v " /TIME" '.HRDLOGPATH.'|sort -r -k7,7|sort -u -k7,8|sort -r|head -15 >/tmp/lastheard.log) 2>&1 &');
 	$ci = 0;
 	if ($LastHeardLog = fopen("/tmp/lastheard.log",'r')) {
 		while ($linkLine = fgets($LastHeardLog)) {
