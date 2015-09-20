@@ -1,7 +1,7 @@
 <?php include "ircddblocal.php"; ?>
 <?php
 function txingInfo() {
-  global $col;
+	global $col;
 ?>
 <?php // Headers.log sample:
 // 0000000001111111111222222222233333333334444444444555555555566666666667777777777888888888899999999990000000000111111111122
@@ -9,41 +9,41 @@ function txingInfo() {
 // M: 2015-08-18 19:23:48: Transmitting to - My: DL1ESZ  /5100  Your: CQCQCQ    Rpt1: DG9VH  G  Rpt2: DG9VH  B  Flags: 00 00 00
 // M: 2015-08-18 19:24:40: Stats for DL1ESZ    Frames: 17.8s, Loss: 1.2%, Packets: 11/890
 
-    exec('(grep -v "  /TIME" '.DSTARREPEATERLOGPATH.'/'.DSTARREPEATERLOGFILENAME.'$(date --utc +%Y-%m-%d).log|sort -r -k7,7|sort -u -k7,8|sort -r|head -1 >/tmp/lasttxing.log) 2>&1 &');
+	exec('(grep -v "  /TIME" '.DSTARREPEATERLOGPATH.'/'.DSTARREPEATERLOGFILENAME.'$(date --utc +%Y-%m-%d).log|sort -r -k7,7|sort -u -k7,8|sort -r|head -1 >/tmp/lasttxing.log) 2>&1 &');
 
-    $ci = 0;
+	$ci = 0;
 
-    if ($LastTXLog = fopen("/tmp/lasttxing.log",'r')) {
-	while ($linkLine = fgets($LastTXLog)) {
-            if(preg_match_all('/^(.{22}).*My: (.*).*Your: (.*).*Rpt1: (.*).*Rpt2: (.*).*Flags: (.*)$/',$linkLine,$linx) > 0){
-		$ci++;
+	if ($LastTXLog = fopen("/tmp/lasttxing.log",'r')) {
+		while ($linkLine = fgets($LastTXLog)) {
+			if(preg_match_all('/^(.{22}).*My: (.*).*Your: (.*).*Rpt1: (.*).*Rpt2: (.*).*Flags: (.*)$/',$linkLine,$linx) > 0){
+				$ci++;
 
-		if($ci > 1) { $ci = 0; }
+				if($ci > 1) { $ci = 0; }
 
-                $QSODate = substr($linx[1][0],2,21);
-                $MyCall = substr($linx[2][0],0,8);
-                $MyId = substr($linx[2][0],9,4);
-                $YourCall = $linx[3][0];
-                $Rpt1 = $linx[4][0];
-                $Rpt2 = $linx[5][0];
-		$Flags = $linx[6][0];
+				$QSODate = substr($linx[1][0],2,21);
+				$MyCall = substr($linx[2][0],0,8);
+				$MyId = substr($linx[2][0],9,4);
+				$YourCall = $linx[3][0];
+				$Rpt1 = $linx[4][0];
+				$Rpt2 = $linx[5][0];
+				$Flags = $linx[6][0];
 
-		// Here we get rid of this confirming-packets by the hotspot
-                if ($Flags != "01 00 00" ) {
-			print "<td>$QSODate</td>";
-			if (SHOWQRZ)
-				print "<td><a title=\"Ask QRZ.com about $MyCall\" href=\"http://qrz.com/db/$MyCall\">$MyCall</a></td>";
-			else
-				print "<td>$MyCall</td>";
-			print "<td>$MyId</td>";
-	              	print "<td>$YourCall</td>";
-			print "<td>$Rpt1</td>";
-			print "<td>$Rpt2</td>";
-                }
-	    }
+				// Here we get rid of this confirming-packets by the hotspot
+				if ($Flags != "01 00 00" ) {
+					print "<td>$QSODate</td>";
+					if (SHOWQRZ)
+						print "<td><a title=\"Ask QRZ.com about $MyCall\" href=\"http://qrz.com/db/$MyCall\">$MyCall</a></td>";
+					else
+						print "<td>$MyCall</td>";
+					print "<td>$MyId</td>";
+					print "<td>$YourCall</td>";
+					print "<td>$Rpt1</td>";
+					print "<td>$Rpt2</td>";
+				}
+			}
+		}
+		fclose($LastTXLog);
 	}
-	fclose($LastTXLog);
-    }
 ?>
 <?php
 }
