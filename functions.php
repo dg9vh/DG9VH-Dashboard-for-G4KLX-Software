@@ -694,7 +694,7 @@ function remoteControl() {
           <tr>
             <th class="calls">Preset-Target:</th>
             <td><select id="presettarget" style="width: 150px">
-                  <option value="">please chose</option>
+                  <option value="">please choose</option>
 <?php
 	foreach($presettargets as $pretgt => $x_value) {
 		echo "<option value=\"".$x_value."\">".$pretgt."</option>";
