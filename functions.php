@@ -178,7 +178,25 @@ function systemInfo() {
 					<td><?php echo $cputemp; ?> &deg;C</td>
 					<td><?php echo $cpufreq; ?> MHz</td>
 					<td><?php echo $sysload; ?> %</td>
-					<td><?php echo $cpuusage; ?> %</td>
+					<!--<td><?php echo $cpuusage; ?> %</td>-->
+					<td>
+<?php
+	if (SHOWPROGRESSBARS) {
+?>
+						<div class="progress"><div class="progress-bar <?php
+		if ($cpuusage < 30)
+			echo "progress-bar-success";
+		if ($cpuusage >= 30 and $cpuusage < 60)
+			echo "progress-bar-warning";
+		if ($cpuusage >= 60)
+			echo "progress-bar-danger";
+?>" role="progressbar" aria-valuenow="<?php echo $cpuusage; ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $cpuusage; ?>%;"><?php echo $cpuusage; ?>%</div></div>
+<?php
+	} else {
+		echo $cpuusage." %";
+	}
+?>
+					</td>
 					<td><?php echo $uptime; ?></td>
 					<td><?php echo $idletime; ?></td>
 				</tr>
@@ -469,7 +487,16 @@ function inQSOInfo() {
 					print "<td>$MyCall</td>";
 
 				print "<td>$Frames</td>";
-				print "<td>$Loss</td>";
+				print "<td>";
+
+				if (SHOWPROGRESSBARS) {
+?>
+						<div class="progress"><div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="<?php echo $cpuusage; ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $Loss; ?>%;"><?php echo $Loss; ?></div></div>
+<?php
+				} else {
+					echo $Loss;
+				}
+				print "</td>";
 				print "</tr>";
 			}
 		}

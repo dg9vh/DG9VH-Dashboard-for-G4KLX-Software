@@ -69,6 +69,9 @@ define("SHOWAPRS", true);
 // set to true, if QRZ.com-links should be shown, false else
 define("SHOWQRZ", true);
 
+// set to true, if progress-bars should be shown, false else
+define("SHOWPROGRESSBARS", true);
+
 // set to your individual refesh-time of "current-TX-infobox"
 // time is given in ms - so 1 second = 1000 ms, default: 1000
 define("RELOADTIMEINMS","1000");

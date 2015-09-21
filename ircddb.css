@@ -60,4 +60,10 @@ tr.row1 {
 background-color: #919191;
 }
 
+.progress-bar {
+color: #000000;
+}
 
+.progress {
+margin-bottom: 0px;
+}
