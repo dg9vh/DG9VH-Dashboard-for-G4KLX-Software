@@ -64,16 +64,17 @@ function head() {
 		<title>Gateway/Hotspot <?php
 	global $MYCALL;
 	echo "$MYCALL" ?></title>
-		<link rel="stylesheet" type="text/css" href="ircddb.css">
 		<!-- Das neueste kompilierte und minimierte CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		<!-- Optionales Theme -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 		<!-- Das neueste kompilierte und minimierte JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="ircddb.css">
 		<meta http-equiv="refresh" content="60">
 	</head>
 	<body>
+	<div class="container-fluid">
 <?php
 }
 
@@ -759,6 +760,7 @@ function footer() {
 	echo "Last Update $datum, $uhrzeit";
 ?>
 		</p>
+	</div>
 	</body>
 </html>
 <?php
