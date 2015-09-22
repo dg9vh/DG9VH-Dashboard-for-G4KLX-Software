@@ -46,7 +46,7 @@ function txingInfo() {
 						$diff = $d2->getTimestamp() - $d1->getTimestamp();
 ?>
 						<td>
-<div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $diff; ?>" aria-valuemin="0" aria-valuemax="180" style="width: <?php echo $diff; ?>%;"><?php echo $diff; ?>s</div></div></td>
+<div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $diff; ?>" aria-valuemin="0" aria-valuemax="180" style="width: <?php echo ($diff/1.8); ?>%;"><?php echo $diff; ?>s</div></div></td>
 <?php
 					}
 				}
