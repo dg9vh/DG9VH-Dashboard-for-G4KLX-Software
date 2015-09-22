@@ -491,7 +491,7 @@ function inQSOInfo() {
 
 				if (SHOWPROGRESSBARS) {
 ?>
-						<div class="progress"><div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="<?php echo $cpuusage; ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $Loss; ?>%;"><?php echo $Loss; ?></div></div>
+						<div class="progress"><div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="<?php echo $Loss; ?>" aria-valuemin="0" aria-valuemax="100" style="width: <?php echo $Loss; ?>%;"><?php echo $Loss; ?></div></div>
 <?php
 				} else {
 					echo $Loss;
@@ -515,12 +515,19 @@ function txingInfoAjax() {
 		<table class="table-bordered">
 			<tbody>
 				<tr>
-					<th class="calls">Date &amp; Time (UTC)</th>
+					<th>Date &amp; Time (UTC)</th>
 					<th class="calls">Call</th>
 					<th class="calls">ID</th>
-					<th class="calls">Yourcall</th>
-					<th class="calls">Repeater1</th>
-					<th class="calls">Repeater2</th>
+					<th>Yourcall</th>
+					<th>Repeater1</th>
+					<th>Repeater2</th>
+<?php
+	if (SHOWPROGRESSBARS) {
+?>
+					<th>TX-Seconds</th>
+<?php
+}
+?>
 				</tr>
 				<tr class="row1" id="txline">
 					<td></td>

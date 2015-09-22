@@ -39,6 +39,16 @@ function txingInfo() {
 					print "<td>$YourCall</td>";
 					print "<td>$Rpt1</td>";
 					print "<td>$Rpt2</td>";
+					if (SHOWPROGRESSBARS) {
+						$UTC = new DateTimeZone("UTC");
+						$d1 = new DateTime($QSODate, $UTC);
+						$d2 = new DateTime('now', $UTC);
+						$diff = $d2->getTimestamp() - $d1->getTimestamp();
+?>
+						<td>
+<div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $diff; ?>" aria-valuemin="0" aria-valuemax="180" style="width: <?php echo $diff; ?>%;"><?php echo $diff; ?>s</div></div></td>
+<?php
+					}
 				}
 			}
 		}
