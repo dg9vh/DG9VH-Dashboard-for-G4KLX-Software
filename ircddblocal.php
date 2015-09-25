@@ -76,6 +76,10 @@ define("SHOWPROGRESSBARS", true);
 // time is given in ms - so 1 second = 1000 ms, default: 1000
 define("RELOADTIMEINMS","1000");
 
+// set to true if you want to reload page after txing, false else
+// only works with AJAX-Version of current-TX
+define("RELOADAFTERTX", true);
+
 // set to your remote-password
 // if you want to use this feature, you have also to add following line
 // into /etc/sudoers:

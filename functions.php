@@ -69,7 +69,7 @@ function head() {
 		<!-- Optionales Theme -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 		<!-- Das neueste kompilierte und minimierte JavaScript -->
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
 		<link rel="stylesheet" type="text/css" href="ircddb.css">
 		<meta http-equiv="refresh" content="60">
 	</head>
@@ -448,7 +448,7 @@ function txingInfo() {
 function inQSOInfo() {
 ?>
 		<H4>Currently maybe in QSO:</H4>
-		<table class="table-bordered">
+		<table class="table-bordered" id="inqso">
 			<tbody>
 				<tr>
 					<th class="calls">Date &amp; Time (UTC)</th>
@@ -539,8 +539,43 @@ function txingInfoAjax() {
 				</tr>
 			</tbody>
 		</table>
-		<script>
+
+	<script>
+				function refreshInQSOAndLastHeardList() {
+				var xmlhttp;
+				if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+					xmlhttp=new XMLHttpRequest();
+				} else {// code for IE6, IE5
+					xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				xmlhttp.onreadystatechange=function() {
+					if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+						document.getElementById("inqso").innerHTML=xmlhttp.responseText;
+					}
+				}
+				xmlhttp.open("POST","refreshInQSO.php",true);
+				xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+				xmlhttp.send("cmd=inQSO");
+				
+				var xmlhttp2;
+				if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+					xmlhttp2=new XMLHttpRequest();
+				} else {// code for IE6, IE5
+					xmlhttp2=new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				xmlhttp2.onreadystatechange=function() {
+					if (xmlhttp2.readyState==4 && xmlhttp2.status==200) {
+						document.getElementById("lastheard").innerHTML=xmlhttp2.responseText;
+					}
+				}
+				xmlhttp2.open("POST","refreshLastHeardList.php",true);
+				xmlhttp2.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+				xmlhttp2.send("cmd=lastHeard");
+			}
+
+			var transmitting = false;
 			function loadXMLDoc() {
+				
 				var xmlhttp;
 				if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
 					xmlhttp=new XMLHttpRequest();
@@ -554,6 +589,19 @@ function txingInfoAjax() {
 				}
 				xmlhttp.open("GET","currentTX.php",true);
 				xmlhttp.send();
+<?php
+	if (RELOADAFTERTX) {
+?>
+				if (document.getElementById("txcall") != null)
+					transmitting = true;
+				else if (transmitting) {
+					refreshInQSOAndLastHeardList();
+					transmitting = false;
+				}
+<?php
+	}
+?>
+				
 				var timeout = window.setTimeout("loadXMLDoc()", <?php echo RELOADTIMEINMS; ?>);
 			}
 
@@ -566,7 +614,7 @@ function lastHeardInfo() {
 	global $MYCALL;
 ?>
 		<H4>Last 15 calls heard on <?php echo "$MYCALL" ?>:</H4>
-		<table class="table-bordered">
+		<table class="table-bordered" id="lastheard">
 			<tbody>
 				<tr>
 					<th class="calls">Date &amp; Time (UTC)</th>
@@ -775,10 +823,7 @@ function remoteControl() {
 					parameters = "REPEATER="+document.getElementById("repeater").value+"&TARGET="+document.getElementById("presettarget").value+"&PASSWD="+document.getElementById("passwd").value+"&RECONNECT="+document.getElementById("reconnect").value;
 
 				xmlhttp.send(parameters);
-				var timeout = window.setTimeout("loadXMLDoc()", <?php echo RELOADTIMEINMS; ?>);
 			}
-
-			loadXMLDoc();
 		</script>
 
 <?php

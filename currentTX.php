@@ -32,9 +32,9 @@ function txingInfo() {
 				if ($Flags != "01 00 00" ) {
 					print "<td>$QSODate</td>";
 					if (SHOWQRZ)
-						print "<td><a title=\"Ask QRZ.com about $MyCall\" href=\"http://qrz.com/db/$MyCall\">$MyCall</a></td>";
+						print "<td id=\"txcall\"><a title=\"Ask QRZ.com about $MyCall\" href=\"http://qrz.com/db/$MyCall\">$MyCall</a></td>";
 					else
-						print "<td>$MyCall</td>";
+						print "<td id=\"txcall\">$MyCall</td>";
 					print "<td>$MyId</td>";
 					print "<td>$YourCall</td>";
 					print "<td>$Rpt1</td>";
