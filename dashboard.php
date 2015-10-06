@@ -14,6 +14,7 @@
 <?php //txingInfo(); ?>
 <?php txingInfoAjax(); ?>
 <?php inQSOInfo(); ?>
+<?php localTrafficInfo(); ?>
 <?php lastHeardInfo(); ?>
 <?php lastUsedInfo(); ?>
 <?php footer(); ?>
