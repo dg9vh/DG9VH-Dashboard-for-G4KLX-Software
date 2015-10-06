@@ -614,7 +614,7 @@ function txingInfoAjax() {
 		</table>
 
 	<script>
-				function refreshInQSOAndLastHeardList() {
+			function doXMLHTTPRequest(scriptname, elem) {
 				var xmlhttp;
 				if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
 					xmlhttp=new XMLHttpRequest();
@@ -623,39 +623,17 @@ function txingInfoAjax() {
 				}
 				xmlhttp.onreadystatechange=function() {
 					if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-						document.getElementById("inqso").innerHTML=xmlhttp.responseText;
+						document.getElementById(elem).innerHTML=xmlhttp.responseText;
 					}
 				}
-				xmlhttp.open("GET","refreshInQSO.php",true);
+				xmlhttp.open("GET",scriptname,true);
 				xmlhttp.send();
+			}
 
-				var xmlhttp2;
-				if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
-					xmlhttp2=new XMLHttpRequest();
-				} else {// code for IE6, IE5
-					xmlhttp2=new ActiveXObject("Microsoft.XMLHTTP");
-				}
-				xmlhttp2.onreadystatechange=function() {
-					if (xmlhttp2.readyState==4 && xmlhttp2.status==200) {
-						document.getElementById("lastheard").innerHTML=xmlhttp2.responseText;
-					}
-				}
-				xmlhttp2.open("GET","refreshLastHeardList.php",true);
-				xmlhttp2.send();
-
-				var xmlhttp3;
-				if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
-					xmlhttp3=new XMLHttpRequest();
-				} else {// code for IE6, IE5
-					xmlhttp3=new ActiveXObject("Microsoft.XMLHTTP");
-				}
-				xmlhttp3.onreadystatechange=function() {
-					if (xmlhttp3.readyState==4 && xmlhttp3.status==200) {
-						document.getElementById("localtraffic").innerHTML=xmlhttp3.responseText;
-					}
-				}
-				xmlhttp3.open("GET","refreshLocalTraffic.php",true);
-				xmlhttp3.send();
+			function refreshInQSOAndLastHeardList() {
+				doXMLHTTPRequest("refreshInQSO.php","inqso");
+				doXMLHTTPRequest("refreshLastHeardList.php","lastheard");
+				doXMLHTTPRequest("refreshLocalTraffic.php","localtraffic");
 			}
 
 			var transmitting = false;
