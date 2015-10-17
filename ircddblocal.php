@@ -90,6 +90,8 @@ define("REMOTECONTROLPASSWD","mypass");
 // feel free to add as many targets as you like
 $presettargets = array(
 	"Deutschland"=>"DCS001 C",
+	"Deutschland REF"=>"REF006 C",
+	"USA REF"=>"REF001 C",
 	"Saarland"=>"DCS002 S",
 	"XRF262"=>"XRF262 A",
 	"Echo"=>"DCS001 Z",
