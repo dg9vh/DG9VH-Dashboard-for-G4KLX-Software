@@ -901,7 +901,7 @@ function remoteControl() {
 							<option value="20">20 minutes</option>
 							<option value="25">25 minutes</option>
 							<option value="30">30 minutes</option>
-							<option value="NEVER" selected>never</option>
+							<option value="NEVER">never</option>
 						</select>
 					</td>
 				</tr>
