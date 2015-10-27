@@ -157,10 +157,13 @@ function systemInfo() {
 
 	$output = shell_exec("grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print usage}'");
 	$cpuusage = round($output, 2); 
+	
+	$output = shell_exec('grep -c processor /proc/cpuinfo');
+	$cpucores = $output;
 
 	$output = shell_exec('cat /proc/uptime');
 	$uptime = format_time(substr($output,0,strpos($output," ")));
-	$idletime = format_time(substr($output,strpos($output," ")));
+	$idletime = format_time((substr($output,strpos($output," ")))/$cpucores);
 
 ?>
 		<h4>System Info:</h4>
