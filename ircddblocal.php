@@ -7,7 +7,8 @@
 
 define("DISTRIBUTION","MARYLAND");
 //define("DISTRIBUTION","WESTERN");
-//define("DISTRIBUTION","DL5DI");
+//define("DISTRIBUTION","DL5DI_DEBIAN");
+//define("DISTRIBUTION","DL5DI_CENTOS");
 //define("DISTRIBUTION","OTHER");
 
 switch (DISTRIBUTION) {
@@ -29,8 +30,17 @@ switch (DISTRIBUTION) {
 		define("LINKLOGPATH", LOGPATH . "/Links.log");
 		define("HRDLOGPATH", LOGPATH . "/Headers.log");
 		break;
-	case "DL5DI":
-// Configuration for DL5DI-Installation-packages
+	case "DL5DI_CENTOS":
+// Configuration for DL5DI-Installation-packages on CENTOS
+		define("LOGPATH", "/var/log/dstar");
+		define("CONFIGPATH", "/etc");
+	        define("DSTARREPEATERLOGPATH", LOGPATH. "/");
+	        define("DSTARREPEATERLOGFILENAME", "DStarRepeater_1-");
+	        define("LINKLOGPATH", LOGPATH . "/Links.log");
+	        define("HRDLOGPATH", LOGPATH . "/Headers.log");
+		break;
+	case "DL5DI_DEBIAN":
+// Configuration for DL5DI-Installation-packages on DEBIAN
 		define("LOGPATH", "/var/log/opendv");
 		define("CONFIGPATH", "/home/opendv/ircddbgateway");
 	        define("DSTARREPEATERLOGPATH", LOGPATH. "/");
