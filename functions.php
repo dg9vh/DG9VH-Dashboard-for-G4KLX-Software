@@ -155,8 +155,20 @@ function systemInfo() {
 	$output = shell_exec('cat /proc/loadavg');
 	$sysload = substr($output,0,strpos($output," "))*100; 
 
-	$output = shell_exec("grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print usage}'");
-	$cpuusage = round($output, 2); 
+	$stat1 = file('/proc/stat'); 
+	sleep(1); 
+	$stat2 = file('/proc/stat'); 
+	$info1 = explode(" ", preg_replace("!cpu +!", "", $stat1[0])); 
+	$info2 = explode(" ", preg_replace("!cpu +!", "", $stat2[0])); 
+	$dif = array(); 
+	$dif['user'] = $info2[0] - $info1[0]; 
+	$dif['nice'] = $info2[1] - $info1[1]; 
+	$dif['sys'] = $info2[2] - $info1[2]; 
+	$dif['idle'] = $info2[3] - $info1[3]; 
+	$total = array_sum($dif); 
+	$cpu = array(); 
+	foreach($dif as $x=>$y) $cpu[$x] = round($y / $total * 100, 1); 
+	$cpuusage = round($cpu['user'] + $cpu['sys'], 2);  
 	
 	$output = shell_exec('grep -c processor /proc/cpuinfo');
 	$cpucores = $output;
