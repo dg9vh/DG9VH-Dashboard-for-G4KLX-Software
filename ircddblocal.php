@@ -70,7 +70,8 @@ define("EMAILADDRESS", "dg9vh@darc.de");
 // set to true, if E-Mail-Address should be shown, false else
 define("SHOWEMAILADDRESS", true);
 
-// set to true, if E-Mail-Address should be shown, false else
+// set to true, if GPS-position of gateway should be shown on google maps, 
+// false else
 define("SHOWGATEWAYPOSITION", true);
 
 // set to true, if APRS.fi-links should be shown, false else
