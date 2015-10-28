@@ -1,4 +1,5 @@
 <?php include "ircddblocal.php"; ?>
+<?php include "tools.php"; ?>
 			<tbody>
 				<tr>
 					<th class="calls">Date &amp; Time (UTC)</th>
@@ -25,19 +26,19 @@
 				if($ci > 1) { $ci = 0; }
 				print "<tr class=\"row".$ci."\">";
 				$QSODate = $linx[1][0];
-				$MyCall = str_replace("	"," ", substr($linx[2][0],0,8));
-				$MyId = substr($linx[2][0],9,4);
+				$MyCall = getAnonymizedValue(str_replace("	"," ", substr($linx[2][0],0,8)));
+				$MyId = getAnonymizedValue(substr($linx[2][0],9,4));
 				$YourCall = $linx[3][0];
-				$Rpt1 = str_replace("	", " ", $linx[4][0]);
+				$Rpt1 = getAnonymizedValue(str_replace("	", " ", $linx[4][0]));
 				$Rpt2 = $linx[5][0];
 				print "<td>$QSODate</td>";
 
-				if (SHOWQRZ)
+				if (SHOWQRZ AND !ANONYMOUS)
 					print "<td><a title=\"Ask QRZ.com about $MyCall\" href=\"http://qrz.com/db/$MyCall\">".trim($MyCall)."</a>";
 				else
 					print "<td>$MyCall";
 
-				if (SHOWAPRS)
+				if (SHOWAPRS AND !ANONYMOUS)
 					print " <a title=\"Show location of $MyCall on aprs.fi\" href=\"http://aprs.fi/#!call=i%2F".str_replace(" ", "%20", $MyCall)."\"><img alt=\"APRS-Position\" src=\"images/position16x16.gif\"></a></td>";
 				else
 					print "</td>";
@@ -45,7 +46,7 @@
 				print "<td>$MyId</td>";
 				print "<td>$YourCall</td>";
 
-				if (SHOWAPRS)
+				if (SHOWAPRS AND !ANONYMOUS)
 					print "<td>$Rpt1 <a title=\"Show location of $Rpt1 on aprs.fi\" href=\"http://aprs.fi/#!call=i%2F".str_replace(" ", "%20", $Rpt1)."\"><img alt=\"APRS-Position\" src=\"images/position16x16.gif\"></a></td>";
 				else
 					print "<td>$Rpt1</td>";

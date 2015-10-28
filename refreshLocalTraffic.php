@@ -1,4 +1,5 @@
 <?php include "ircddblocal.php"; ?>
+<?php include "tools.php"; ?>
 			<tbody>
 				<tr>
 					<th class="calls">Date &amp; Time (UTC)</th>
@@ -19,7 +20,7 @@
 		while ($linkLine = fgets($localTrafficLog)) {
 			if(preg_match_all('/^(.{22}).*AMBE for (.*).*Frames: (.*).*s, Silence: (.*).*%, BER:(.*)/',$linkLine,$linx) > 0){
 				$QSODate = substr($linx[1][0],3,21);
-				$MyCall = substr($linx[2][0],0,8);
+				$MyCall = getAnonymizedValue(substr($linx[2][0],0,8));
 				$Frames = $linx[3][0];
 				$Silence = $linx[4][0];
 				$BER = $linx[4][0];

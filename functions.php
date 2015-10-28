@@ -1,34 +1,9 @@
 <?php include "ircddblocal.php"; ?>
+<?php include "tools.php"; ?>
 <?php
 $progname = "DG9VH - Dashboard for G4KLX ircddb-Gateway";
 $MYCALL;
 $configs = array();
-
-function format_time($seconds) {
-	$secs = intval($seconds % 60);
-	$mins = intval($seconds / 60 % 60);
-	$hours = intval($seconds / 3600 % 24);
-	$days = intval($seconds / 86400);
-	$uptimeString = "";
-
-	if ($days > 0) {
-		$uptimeString .= $days;
-		$uptimeString .= (($days == 1) ? "&nbsp;day" : "&nbsp;days");
-	}
-	if ($hours > 0) {
-		$uptimeString .= (($days > 0) ? ", " : "") . $hours;
-		$uptimeString .= (($hours == 1) ? "&nbsp;hour" : "&nbsp;hours");
-	}
-	if ($mins > 0) {
-		$uptimeString .= (($days > 0 || $hours > 0) ? ", " : "") . $mins;
-		$uptimeString .= (($mins == 1) ? "&nbsp;minute" : "&nbsp;minutes");
-	}
-	if ($secs > 0) {
-		$uptimeString .= (($days > 0 || $hours > 0 || $mins > 0) ? ", " : "") . $secs;
-		$uptimeString .= (($secs == 1) ? "&nbsp;second" : "&nbsp;seconds");
-	}
-	return $uptimeString;
-}
 
 function initialize() {
 	global $configs;
@@ -334,7 +309,7 @@ function linksInfo($direction = "both") {
 				 $protocol = $linx[2][0];
 				 $linkType = $linx[3][0];
 				 $linkSource = $linx[4][0];
-				 $linkDest = $linx[5][0];
+				 $linkDest = getAnonymizedValue($linx[5][0]);
 				 $linkDir = $linx[6][0];
 			 }
 // CCS-Link, sample:
@@ -344,7 +319,7 @@ function linksInfo($direction = "both") {
 				 $protocol = $linx[2][0];
 				 $linkType = $linx[2][0];
 				 $linkSource = $linx[3][0];
-				 $linkDest = $linx[4][0];
+				 $linkDest = getAnonymizedValue($linx[4][0]);
 				 $linkDir = $linx[5][0];
 			}
 // Dongle-Link, sample: 
@@ -355,7 +330,7 @@ function linksInfo($direction = "both") {
 				 $protocol = $linx[2][0];
 				 $linkType = $linx[3][0];
 				 $linkSource = "&nbsp;";
-				 $linkDest = $linx[4][0];
+				 $linkDest = getAnonymizedValue($linx[4][0]);
 				 $linkDir = $linx[5][0];
 			 }
 			 if ($direction == "in" && $linkDir == "Incoming" || $direction == "out" && $linkDir == "Outgoing" || $direction == "both" ) {
@@ -434,10 +409,10 @@ function txingInfo() {
 			if($ci > 1) { $ci = 0; }
 			print "<tr class=\"row".$ci."\">";
 			$QSODate = substr($linx[1][0],2,21);
-			$MyCall = substr($linx[2][0],0,8);
-			$MyId = substr($linx[2][0],9,4);
+			$MyCall = getAnonymizedValue(substr($linx[2][0],0,8));
+			$MyId = getAnonymizedValue(substr($linx[2][0],9,4));
 			$YourCall = $linx[3][0];
-			$Rpt1 = $linx[4][0];
+			$Rpt1 = getAnonymizedValue($linx[4][0]);
 			$Rpt2 = $linx[5][0];
 			print "<Td>$QSODate</td>";
 
@@ -484,7 +459,7 @@ function inQSOInfo() {
 		while ($linkLine = fgets($QSOInfoLog)) {
 			if(preg_match_all('/^(.{22}).*Stats for (.*).*Frames: (.*).*s, Loss: (.*).*%, Packets:(.*)/',$linkLine,$linx) > 0){
 				$QSODate = substr($linx[1][0],3,21);
-				$MyCall = substr($linx[2][0],0,8);
+				$MyCall = getAnonymizedValue(substr($linx[2][0],0,8));
 				$Frames = $linx[3][0];
 				$Loss = $linx[4][0];
 				$UTC = new DateTimeZone("UTC");
@@ -497,7 +472,7 @@ function inQSOInfo() {
 					print "<tr class=\"row".$ci."\">";
 					print "<td>$QSODate</td>";
 
-					if (SHOWQRZ)
+					if (SHOWQRZ AND !ANONYMIZE)
 						print "<td><a title=\"Ask QRZ.com about $MyCall\" href=\"http://qrz.com/db/$MyCall\">".trim($MyCall)."</a></td>";
 					else
 						print "<td>$MyCall</td>";
@@ -520,7 +495,7 @@ function inQSOInfo() {
 			}
 			if(preg_match_all('/^(.{22}).*AMBE for (.*).*Frames: (.*).*s, Silence: (.*).*%, BER:(.*)/',$linkLine,$linx) > 0){
 				$QSODate = substr($linx[1][0],3,21);
-				$MyCall = substr($linx[2][0],0,8);
+				$MyCall = getAnonymizedValue(substr($linx[2][0],0,8));
 				$Frames = $linx[3][0];
 				$BER = $linx[4][0];
 				$UTC = new DateTimeZone("UTC");
@@ -585,7 +560,7 @@ function localTrafficInfo() {
 		while ($linkLine = fgets($localTrafficLog)) {
 			if(preg_match_all('/^(.{22}).*AMBE for (.*).*Frames: (.*).*s, Silence: (.*).*%, BER:(.*)/',$linkLine,$linx) > 0){
 				$QSODate = substr($linx[1][0],3,21);
-				$MyCall = substr($linx[2][0],0,8);
+				$MyCall = getAnonymizedValue(substr($linx[2][0],0,8));
 				$Frames = $linx[3][0];
 				$Silence = $linx[4][0];
 				$BER = $linx[4][0];
@@ -757,19 +732,19 @@ function lastHeardInfo() {
 				if($ci > 1) { $ci = 0; }
 				print "<tr class=\"row".$ci."\">";
 				$QSODate = $linx[1][0];
-				$MyCall = str_replace("	"," ", substr($linx[2][0],0,8));
-				$MyId = substr($linx[2][0],9,4);
+				$MyCall = getAnonymizedValue(str_replace("	"," ", substr($linx[2][0],0,8)));
+				$MyId = getAnonymizedValue(substr($linx[2][0],9,4));
 				$YourCall = $linx[3][0];
-				$Rpt1 = str_replace("	", " ", $linx[4][0]);
+				$Rpt1 = getAnonymizedValue(str_replace("	", " ", $linx[4][0]));
 				$Rpt2 = $linx[5][0];
 				print "<td>$QSODate</td>";
 
-				if (SHOWQRZ)
+				if (SHOWQRZ AND !ANONYMIZE)
 					print "<td><a title=\"Ask QRZ.com about $MyCall\" href=\"http://qrz.com/db/$MyCall\">".trim($MyCall)."</a>";
 				else
 					print "<td>$MyCall";
 
-				if (SHOWAPRS)
+				if (SHOWAPRS AND !ANONYMIZE)
 					print " <a title=\"Show location of $MyCall on aprs.fi\" href=\"http://aprs.fi/#!call=i%2F".str_replace(" ", "%20", $MyCall)."\"><img alt=\"APRS-Position\" src=\"images/position16x16.gif\"></a></td>";
 				else
 					print "</td>";
@@ -777,7 +752,7 @@ function lastHeardInfo() {
 				print "<td>$MyId</td>";
 				print "<td>$YourCall</td>";
 
-				if (SHOWAPRS)
+				if (SHOWAPRS AND !ANONYMIZE)
 					print "<td>$Rpt1 <a title=\"Show location of $Rpt1 on aprs.fi\" href=\"http://aprs.fi/#!call=i%2F".str_replace(" ", "%20", $Rpt1)."\"><img alt=\"APRS-Position\" src=\"images/position16x16.gif\"></a></td>";
 				else
 					print "<td>$Rpt1</td>";
@@ -823,10 +798,10 @@ function lastUsedInfo() {
 				if($ci > 1) { $ci = 0; }
 				print "<tr class=\"row".$ci."\">";
 				$QSODate = $linx[1][0];
-				$MyCall = substr($linx[2][0],0,8);
-				$MyId = substr($linx[2][0],9,4);
+				$MyCall = getAnonymizedValue(substr($linx[2][0],0,8));
+				$MyId = getAnonymizedValue(substr($linx[2][0],9,4));
 				$YourCall = $linx[3][0];
-				$Rpt1 = $linx[4][0];
+				$Rpt1 = getAnonymizedValue($linx[4][0]);
 				$Rpt2 = $linx[5][0];
 				print "<td>$QSODate</td>";
 				print "<td>$MyCall</td>";
@@ -946,6 +921,14 @@ function remoteControl() {
 }
 
 function footer() {
+	if (ANONYMIZE) {
+?>
+		<p>
+			<hr/>
+			<a name="footnote"></a>* Personal callsigns and ID-information would be anonymized
+		</p>
+<?php		
+	}
 ?>
 		<p>
 <?php

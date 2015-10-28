@@ -107,4 +107,8 @@ $presettargets = array(
 	"XRF262"=>"XRF262 A",
 	"Echo"=>"DCS001 Z",
 );
+
+// set to true, if you want to anonymize all personal data of others than you
+define("ANONYMIZE", false);
+
 ?>

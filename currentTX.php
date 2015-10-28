@@ -1,4 +1,5 @@
 <?php include "ircddblocal.php"; ?>
+<?php include "tools.php"; ?>
 <?php
 function txingInfo() {
 	global $col;
@@ -21,17 +22,17 @@ function txingInfo() {
 				if($ci > 1) { $ci = 0; }
 
 				$QSODate = substr($linx[1][0],2,21);
-				$MyCall = substr($linx[2][0],0,8);
-				$MyId = substr($linx[2][0],9,4);
+				$MyCall = getAnonymizedValue(substr($linx[2][0],0,8));
+				$MyId = getAnonymizedValue(substr($linx[2][0],9,4));
 				$YourCall = $linx[3][0];
-				$Rpt1 = $linx[4][0];
+				$Rpt1 = getAnonymizedValue($linx[4][0]);
 				$Rpt2 = $linx[5][0];
 				$Flags = $linx[6][0];
 
 				// Here we get rid of this confirming-packets by the hotspot
 				if ($Flags != "01 00 00" ) {
 					print "<td>$QSODate</td>";
-					if (SHOWQRZ)
+					if (SHOWQRZ AND !ANONYMOUS)
 						print "<td id=\"txcall\"><a title=\"Ask QRZ.com about $MyCall\" href=\"http://qrz.com/db/$MyCall\">$MyCall</a></td>";
 					else
 						print "<td id=\"txcall\">$MyCall</td>";
