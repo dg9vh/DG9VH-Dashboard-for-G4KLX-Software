@@ -1,7 +1,7 @@
 <?php
 function getAnonymizedValue($value) {
 	if (ANONYMIZE) {
-		return hash('adler32', $value) . "<a href=\"#footnote\">*</a>";
+		return hash('adler32', ANONSALT.$value) . "<a href=\"#footnote\">*</a>";
 	} else {
 		return $value;
 	}

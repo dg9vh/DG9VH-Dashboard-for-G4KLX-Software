@@ -111,4 +111,6 @@ $presettargets = array(
 // set to true, if you want to anonymize all personal data of others than you
 define("ANONYMIZE", false);
 
+// set the anonymizer-salt if ANONYMIZE is true
+define("ANONSALT", "X");
 ?>
