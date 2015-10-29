@@ -55,16 +55,18 @@ configurations and one you could configure to your own wishes.
 3.2 To chose one of the configuration-lines simply delete the // before the 
 define-line and set two // in front of the ones you don't want.
 
-For example: You got a DL5DI-installation:
+For example: You got a DL5DI-installation, based on Debian-packages:
 //define("DISTRIBUTION","MARYLAND");
 //define("DISTRIBUTION","WESTERN");
-define("DISTRIBUTION","DL5DI");
+define("DISTRIBUTION","DL5DI_DEBIAN");
+//define("DISTRIBUTION","DL5DI_CENTOS");
 //define("DISTRIBUTION","OTHER");
 
 If you are using a Western-Dstar-Image:
 //define("DISTRIBUTION","MARYLAND");
 define("DISTRIBUTION","WESTERN");
-//define("DISTRIBUTION","DL5DI");
+//define("DISTRIBUTION","DL5DI_DEBIAN");
+//define("DISTRIBUTION","DL5DI_CENTOS");
 //define("DISTRIBUTION","OTHER");
 
 Default-installation is for Maryland-Dstar because of the fact, I am 
