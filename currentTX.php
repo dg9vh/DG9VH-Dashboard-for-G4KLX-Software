@@ -21,7 +21,7 @@ function txingInfo() {
 
 				if($ci > 1) { $ci = 0; }
 
-				$QSODate = substr($linx[1][0],3,21);
+				$QSODate = substr($linx[1][0],2,21);
 				$MyCall = getAnonymizedValue(substr($linx[2][0],0,8));
 				$MyId = getAnonymizedValue(substr($linx[2][0],9,4));
 				$YourCall = $linx[3][0];
@@ -31,33 +31,24 @@ function txingInfo() {
 
 				// Here we get rid of this confirming-packets by the hotspot
 				if ($Flags != "01 00 00" ) {
-					if ($QSOInfoLog = fopen("/tmp/qsoinfo.log",'r')) {
-						$QSOLine = fgets($QSOInfoLog);
-						if(preg_match_all('/^(.{22}).*Stats for (.*).*Frames: (.*).*s, Loss: (.*).*%, Packets:(.*)/',$QSOLine,$QSO) > 0){
-							$LastQSODate = substr($QSO[1][0],3,21);
-							$LastMyCall = getAnonymizedValue(substr($QSO[2][0],0,8));
-							if ($LastQSODate != $QSODate) {
-								print "<td>$QSODate</td>";
-								if (SHOWQRZ AND !ANONYMOUS)
-									print "<td id=\"txcall\"><a title=\"Ask QRZ.com about $MyCall\" href=\"http://qrz.com/db/$MyCall\">$MyCall</a></td>";
-								else
-									print "<td id=\"txcall\">$MyCall</td>";
-								print "<td>$MyId</td>";
-								print "<td>$YourCall</td>";
-								print "<td>$Rpt1</td>";
-								print "<td>$Rpt2</td>";
-								if (SHOWPROGRESSBARS) {
-									$UTC = new DateTimeZone("UTC");
-									$d1 = new DateTime($QSODate, $UTC);
-									$d2 = new DateTime('now', $UTC);
-									$diff = $d2->getTimestamp() - $d1->getTimestamp();
-			?>
-									<td>
-			<div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $diff; ?>" aria-valuemin="0" aria-valuemax="180" style="width: <?php echo ($diff/1.8); ?>%;"><?php echo $diff; ?>s</div></div></td>
-			<?php
-								}
-							}
-						}
+					print "<td>$QSODate</td>";
+					if (SHOWQRZ AND !ANONYMOUS)
+						print "<td id=\"txcall\"><a title=\"Ask QRZ.com about $MyCall\" href=\"http://qrz.com/db/$MyCall\">$MyCall</a></td>";
+					else
+						print "<td id=\"txcall\">$MyCall</td>";
+					print "<td>$MyId</td>";
+					print "<td>$YourCall</td>";
+					print "<td>$Rpt1</td>";
+					print "<td>$Rpt2</td>";
+					if (SHOWPROGRESSBARS) {
+						$UTC = new DateTimeZone("UTC");
+						$d1 = new DateTime($QSODate, $UTC);
+						$d2 = new DateTime('now', $UTC);
+						$diff = $d2->getTimestamp() - $d1->getTimestamp();
+?>
+						<td>
+<div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="<?php echo $diff; ?>" aria-valuemin="0" aria-valuemax="180" style="width: <?php echo ($diff/1.8); ?>%;"><?php echo $diff; ?>s</div></div></td>
+<?php
 					}
 				}
 			}
