@@ -539,7 +539,7 @@ function inQSOInfo() {
 
 function lastTransmissionsInfo() {
 ?>
-		<H4>Last 15 Transmissions:</H4>
+		<H4>Last 15 transmissions:</H4>
 		<table class="table-bordered" id="lasttx">
 			<tbody>
 				<tr>
