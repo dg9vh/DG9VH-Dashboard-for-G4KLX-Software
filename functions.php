@@ -540,7 +540,7 @@ function inQSOInfo() {
 function lastTransmissionsInfo() {
 ?>
 		<H4>Last 15 Transmissions:</H4>
-		<table class="table-bordered" id="inqso">
+		<table class="table-bordered" id="lasttx">
 			<tbody>
 				<tr>
 					<th class="calls">Date &amp; Time (UTC)</th>
@@ -751,6 +751,7 @@ function txingInfoAjax() {
 
 			function refreshInQSOAndLastHeardList() {
 				doXMLHTTPRequest("refreshInQSO.php","inqso");
+				doXMLHTTPRequest("refreshLastTX.php","lasttx");
 				doXMLHTTPRequest("refreshLastHeardList.php","lastheard");
 				doXMLHTTPRequest("refreshLocalTraffic.php","localtraffic");
 			}
