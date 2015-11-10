@@ -400,7 +400,7 @@ function txingInfo() {
 // M: 2015-08-18 19:23:48: Transmitting to - My: DL1ESZ	/5100	Your: CQCQCQ		Rpt1: DG9VH	G	Rpt2: DG9VH	B	Flags: 00 00 00
 // M: 2015-08-18 19:24:40: Stats for DL1ESZ		Frames: 17.8s, Loss: 1.2%, Packets: 11/890
 
-	exec('(grep -v " /TIME" '.DSTARREPEATERLOGPATH.'/'.DSTARREPEATERLOGFILENAME.'$(date --utc +%Y-%m-%d).log|sort -r -k7,7|sort -u -k7,8|sort -r|head -1 >'.TMPPATH.'/lasttxing.log) 2>&1 &');
+	exec('(grep -v "  /TIME" '.DSTARREPEATERLOGPATH.'/'.DSTARREPEATERLOGFILENAME.'$(date --utc +%Y-%m-%d).log|sort -r|head -1 >'.TMPPATH.'/lasttxing.log) 2>&1 &');
 	$ci = 0;
 	if ($LastTXLog = fopen(TMPPATH."/lasttxing.log",'r')) {
 		while ($linkLine = fgets($LastTXLog)) {
