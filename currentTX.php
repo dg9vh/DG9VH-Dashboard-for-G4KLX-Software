@@ -4,13 +4,13 @@
 function txingInfo() {
 	global $col;
 ?>
-<?php // Headers.log sample:
+<?php // Headers.log sample: |egrep -h "Radio|Network|Stats|AMBE"
 // 0000000001111111111222222222233333333334444444444555555555566666666667777777777888888888899999999990000000000111111111122
 // 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901
 // M: 2015-08-18 19:23:48: Transmitting to - My: DL1ESZ  /5100  Your: CQCQCQ    Rpt1: DG9VH  G  Rpt2: DG9VH  B  Flags: 00 00 00
 // M: 2015-08-18 19:24:40: Stats for DL1ESZ    Frames: 17.8s, Loss: 1.2%, Packets: 11/890
 
-	exec('(grep -v "  /TIME" '.DSTARREPEATERLOGPATH.'/'.DSTARREPEATERLOGFILENAME.'$(date --utc +%Y-%m-%d).log|sort -r|head -1 >'.TMPPATH.'/lasttxing.log) 2>&1 &');
+	exec('(grep -v "  /TIME" '.DSTARREPEATERLOGPATH.'/'.DSTARREPEATERLOGFILENAME.'$(date --utc +%Y-%m-%d).log|tail -1|sort -r|head -1 >'.TMPPATH.'/lasttxing.log) 2>&1 &');
 
 	$ci = 0;
 
