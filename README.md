@@ -14,6 +14,7 @@ Installation:
 Requirements:	- running installation of php5 and www-server like 
 		  lighttpd
 		- running installation of g4klx gateway and repeater
+		- make sure you have GUI Log enabled!
 
 How to install:
 ---------------
