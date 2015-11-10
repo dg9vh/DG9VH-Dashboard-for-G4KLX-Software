@@ -599,7 +599,7 @@ function lastTransmissionsInfo() {
 				print "<tr class=\"row".$ci."\">";
 				print "<td>$QSODate</td>";
 
-				if (SHOWQRZ)
+				if (SHOWQRZ AND !ANONYMIZE)
 					print "<td><a title=\"Ask QRZ.com about $MyCall\" href=\"http://qrz.com/db/$MyCall\">".trim($MyCall)."</a></td>";
 				else
 					print "<td>$MyCall</td>";
@@ -664,7 +664,7 @@ function localTrafficInfo() {
 				print "<tr class=\"row".$ci."\">";
 				print "<td>$QSODate</td>";
 
-				if (SHOWQRZ)
+				if (SHOWQRZ AND !ANONYMIZE)
 					print "<td><a title=\"Ask QRZ.com about $MyCall\" href=\"http://qrz.com/db/$MyCall\">".trim($MyCall)."</a></td>";
 				else
 					print "<td>$MyCall</td>";
