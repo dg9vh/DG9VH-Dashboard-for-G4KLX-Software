@@ -400,9 +400,9 @@ function txingInfo() {
 // M: 2015-08-18 19:23:48: Transmitting to - My: DL1ESZ	/5100	Your: CQCQCQ		Rpt1: DG9VH	G	Rpt2: DG9VH	B	Flags: 00 00 00
 // M: 2015-08-18 19:24:40: Stats for DL1ESZ		Frames: 17.8s, Loss: 1.2%, Packets: 11/890
 
-	exec('(grep -v " /TIME" '.DSTARREPEATERLOGPATH.'/'.DSTARREPEATERLOGFILENAME.'$(date --utc +%Y-%m-%d).log|sort -r -k7,7|sort -u -k7,8|sort -r|head -1 >/tmp/lasttxing.log) 2>&1 &');
+	exec('(grep -v " /TIME" '.DSTARREPEATERLOGPATH.'/'.DSTARREPEATERLOGFILENAME.'$(date --utc +%Y-%m-%d).log|sort -r -k7,7|sort -u -k7,8|sort -r|head -1 >'.TMPPATH.'/lasttxing.log) 2>&1 &');
 	$ci = 0;
-	if ($LastTXLog = fopen("/tmp/lasttxing.log",'r')) {
+	if ($LastTXLog = fopen(TMPPATH."/lasttxing.log",'r')) {
 		while ($linkLine = fgets($LastTXLog)) {
 			if(preg_match_all('/^(.{22}).*My: (.*).*Your: (.*).*Rpt1: (.*).*Rpt2: (.*).*Flags: (.*)$/',$linkLine,$linx) > 0){
 			$ci++;
@@ -453,9 +453,9 @@ function inQSOInfo() {
 // M: 2015-08-18 19:23:48: Transmitting to - My: DL1ESZ	/5100	Your: CQCQCQ		Rpt1: DG9VH	G	Rpt2: DG9VH	B	Flags: 00 00 00
 // M: 2015-08-18 19:24:40: Stats for DL1ESZ		Frames: 17.8s, Loss: 1.2%, Packets: 11/890
 // M: 2015-10-06 07:33:41: AMBE for DG9VH     Frames: 5.3s, Silence: 0.0%, BER: 0.0%
-	exec('(grep -v " /TIME" '.DSTARREPEATERLOGPATH.'/'.DSTARREPEATERLOGFILENAME.'$(date --utc +%Y-%m-%d).log|egrep -h "Stats|AMBE"|sort -r -k3,9 |sort -u -k6,6|sort -r|head -10 >/tmp/qsoinfo.log) 2>&1 &');
+	exec('(grep -v " /TIME" '.DSTARREPEATERLOGPATH.'/'.DSTARREPEATERLOGFILENAME.'$(date --utc +%Y-%m-%d).log|egrep -h "Stats|AMBE"|sort -r -k3,9 |sort -u -k6,6|sort -r|head -10 >'.TMPPATH.'/qsoinfo.log) 2>&1 &');
 	$ci = 0;
-	if ($QSOInfoLog = fopen("/tmp/qsoinfo.log",'r')) {
+	if ($QSOInfoLog = fopen(TMPPATH."/qsoinfo.log",'r')) {
 		while ($linkLine = fgets($QSOInfoLog)) {
 			if(preg_match_all('/^(.{22}).*Stats for (.*).*Frames: (.*).*s, Loss: (.*).*%, Packets:(.*)/',$linkLine,$linx) > 0){
 				$QSODate = substr($linx[1][0],3,21);
@@ -554,9 +554,9 @@ function lastTransmissionsInfo() {
 // M: 2015-08-18 19:23:48: Transmitting to - My: DL1ESZ	/5100	Your: CQCQCQ		Rpt1: DG9VH	G	Rpt2: DG9VH	B	Flags: 00 00 00
 // M: 2015-08-18 19:24:40: Stats for DL1ESZ		Frames: 17.8s, Loss: 1.2%, Packets: 11/890
 // M: 2015-10-06 07:33:41: AMBE for DG9VH     Frames: 5.3s, Silence: 0.0%, BER: 0.0%
-	exec('(grep -v " /TIME" '.DSTARREPEATERLOGPATH.'/'.DSTARREPEATERLOGFILENAME.'$(date --utc +%Y-%m-%d).log|egrep -h "Stats|AMBE"|sort -r|head -15 >/tmp/last.log) 2>&1 &');
+	exec('(grep -v " /TIME" '.DSTARREPEATERLOGPATH.'/'.DSTARREPEATERLOGFILENAME.'$(date --utc +%Y-%m-%d).log|egrep -h "Stats|AMBE"|sort -r|head -15 >'.TMPPATH.'/last.log) 2>&1 &');
 	$ci = 0;
-	if ($LastLog = fopen("/tmp/last.log",'r')) {
+	if ($LastLog = fopen(TMPPATH."/last.log",'r')) {
 		while ($linkLine = fgets($LastLog)) {
 			if(preg_match_all('/^(.{22}).*Stats for (.*).*Frames: (.*).*s, Loss: (.*).*%, Packets:(.*)/',$linkLine,$linx) > 0){
 				$QSODate = substr($linx[1][0],3,21);
@@ -619,7 +619,7 @@ function lastTransmissionsInfo() {
 			}
 		}
 
-		fclose($QSOInfoLog);
+		fclose($LastLog);
 	}
 ?>
 			</tbody>
@@ -645,9 +645,9 @@ function localTrafficInfo() {
 // 01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901
 // M: 2015-10-06 07:33:41: AMBE for DG9VH     Frames: 5.3s, Silence: 0.0%, BER: 0.0%
 
-	exec('(grep -v " /TIME" '.DSTARREPEATERLOGPATH.'/'.DSTARREPEATERLOGFILENAME.'$(date --utc +%Y-%m-%d).log|grep AMBE|sort -r -k3,9 |sort -r|head -5 >/tmp/localtraffic.log) 2>&1 &');
+	exec('(grep -v " /TIME" '.DSTARREPEATERLOGPATH.'/'.DSTARREPEATERLOGFILENAME.'$(date --utc +%Y-%m-%d).log|grep AMBE|sort -r -k3,9 |sort -r|head -5 >'.TMPPATH.'/localtraffic.log) 2>&1 &');
 	$ci = 0;
-	if ($localTrafficLog = fopen("/tmp/localtraffic.log",'r')) {
+	if ($localTrafficLog = fopen(TMPPATH."/localtraffic.log",'r')) {
 		while ($linkLine = fgets($localTrafficLog)) {
 			if(preg_match_all('/^(.{22}).*AMBE for (.*).*Frames: (.*).*s, Silence: (.*).*%, BER:(.*)/',$linkLine,$linx) > 0){
 				$QSODate = substr($linx[1][0],3,21);
@@ -815,9 +815,9 @@ function lastHeardInfo() {
 // 2013-02-09 13:49:57: DExtra header - My: DO7MT	 /			Your: CQCQCQ		Rpt1: XRF001 G	Rpt2: XRF001 C	Flags: 00 00 00
 //
 
-	exec('(grep -v " /TIME" '.HRDLOGPATH.'|sort -r -k7,7|sort -u -k7,8|sort -r|head -15 >/tmp/lastheard.log) 2>&1 &');
+	exec('(grep -v " /TIME" '.HRDLOGPATH.'|sort -r -k7,7|sort -u -k7,8|sort -r|head -15 >'.TMPPATH.'/lastheard.log) 2>&1 &');
 	$ci = 0;
-	if ($LastHeardLog = fopen("/tmp/lastheard.log",'r')) {
+	if ($LastHeardLog = fopen(TMPPATH."/lastheard.log",'r')) {
 		while ($linkLine = fgets($LastHeardLog)) {
 			if(preg_match_all('/^(.{19}).*My: (.*).*Your: (.*).*Rpt1: (.*).*Rpt2: (.*).*Flags: (.*)$/',$linkLine,$linx) > 0){
 				$ci++;
@@ -881,9 +881,9 @@ function lastUsedInfo() {
 // 2012-05-29 20:31:53: Repeater header - My: PE1AGO	/HANS	Your: CQCQCQ		Rpt1: PI1DEC B	Rpt2: PI1DEC G	Flags: 00 00 00
 //
 
-	exec('(grep "Repeater header" '.HRDLOGPATH.'|sort -r -k7,7|sort -u -k7,8|sort -r >/tmp/worked.log) 2>&1 &');
+	exec('(grep "Repeater header" '.HRDLOGPATH.'|sort -r -k7,7|sort -u -k7,8|sort -r >'.TMPPATH.'/worked.log) 2>&1 &');
 	$ci = 0;
-	if ($WorkedLog = fopen("/tmp/worked.log",'r')) {
+	if ($WorkedLog = fopen(TMPPATH."/worked.log",'r')) {
 		while ($linkLine = fgets($WorkedLog)) {
 			if(preg_match_all('/^(.{19}).*My: (.*).*Your: (.*).*Rpt1: (.*).*Rpt2: (.*).*Flags: (.*)$/',$linkLine,$linx) > 0){
 				$ci++;

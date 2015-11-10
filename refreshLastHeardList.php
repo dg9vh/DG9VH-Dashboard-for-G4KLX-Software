@@ -17,9 +17,9 @@
 // 2013-02-09 13:49:57: DExtra header - My: DO7MT	 /			Your: CQCQCQ		Rpt1: XRF001 G	Rpt2: XRF001 C	Flags: 00 00 00
 //
 
-	exec('(grep -v " /TIME" '.HRDLOGPATH.'|sort -r -k7,7|sort -u -k7,8|sort -r|head -15 >/tmp/lastheard.log) 2>&1 &');
+	exec('(grep -v " /TIME" '.HRDLOGPATH.'|sort -r -k7,7|sort -u -k7,8|sort -r|head -15 >'.TMPPATH.'/lastheard.log) 2>&1 &');
 	$ci = 0;
-	if ($LastHeardLog = fopen("/tmp/lastheard.log",'r')) {
+	if ($LastHeardLog = fopen(TMPPATH."/lastheard.log",'r')) {
 		while ($linkLine = fgets($LastHeardLog)) {
 			if(preg_match_all('/^(.{19}).*My: (.*).*Your: (.*).*Rpt1: (.*).*Rpt2: (.*).*Flags: (.*)$/',$linkLine,$linx) > 0){
 				$ci++;
@@ -33,12 +33,12 @@
 				$Rpt2 = $linx[5][0];
 				print "<td>$QSODate</td>";
 
-				if (SHOWQRZ AND !ANONYMOUS)
+				if (SHOWQRZ AND !ANONYMIZE)
 					print "<td><a title=\"Ask QRZ.com about $MyCall\" href=\"http://qrz.com/db/$MyCall\">".trim($MyCall)."</a>";
 				else
 					print "<td>$MyCall";
 
-				if (SHOWAPRS AND !ANONYMOUS)
+				if (SHOWAPRS AND !ANONYMIZE)
 					print " <a title=\"Show location of $MyCall on aprs.fi\" href=\"http://aprs.fi/#!call=i%2F".str_replace(" ", "%20", $MyCall)."\"><img alt=\"APRS-Position\" src=\"images/position16x16.gif\"></a></td>";
 				else
 					print "</td>";
@@ -46,7 +46,7 @@
 				print "<td>$MyId</td>";
 				print "<td>$YourCall</td>";
 
-				if (SHOWAPRS AND !ANONYMOUS)
+				if (SHOWAPRS AND !ANONYMIZE)
 					print "<td>$Rpt1 <a title=\"Show location of $Rpt1 on aprs.fi\" href=\"http://aprs.fi/#!call=i%2F".str_replace(" ", "%20", $Rpt1)."\"><img alt=\"APRS-Position\" src=\"images/position16x16.gif\"></a></td>";
 				else
 					print "<td>$Rpt1</td>";

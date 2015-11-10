@@ -14,9 +14,9 @@
 // M: 2015-10-06 07:33:41: AMBE for DG9VH     Frames: 5.3s, Silence: 0.0%, BER: 0.0%
 
 //sort -u -k6,6|
-	exec('(grep -v " /TIME" '.DSTARREPEATERLOGPATH.'/'.DSTARREPEATERLOGFILENAME.'$(date --utc +%Y-%m-%d).log|grep AMBE|sort -r -k3,9 |sort -r|head -5 >/tmp/localtraffic.log) 2>&1 &');
+	exec('(grep -v " /TIME" '.DSTARREPEATERLOGPATH.'/'.DSTARREPEATERLOGFILENAME.'$(date --utc +%Y-%m-%d).log|grep AMBE|sort -r -k3,9 |sort -r|head -5 >'.TMPPATH.'/localtraffic.log) 2>&1 &');
 	$ci = 0;
-	if ($localTrafficLog = fopen("/tmp/localtraffic.log",'r')) {
+	if ($localTrafficLog = fopen(TMPPATH."/localtraffic.log",'r')) {
 		while ($linkLine = fgets($localTrafficLog)) {
 			if(preg_match_all('/^(.{22}).*AMBE for (.*).*Frames: (.*).*s, Silence: (.*).*%, BER:(.*)/',$linkLine,$linx) > 0){
 				$QSODate = substr($linx[1][0],3,21);

@@ -13,9 +13,9 @@
 // M: 2015-08-18 19:23:48: Transmitting to - My: DL1ESZ	/5100	Your: CQCQCQ		Rpt1: DG9VH	G	Rpt2: DG9VH	B	Flags: 00 00 00
 // M: 2015-08-18 19:24:40: Stats for DL1ESZ		Frames: 17.8s, Loss: 1.2%, Packets: 11/890
 // M: 2015-10-06 07:33:41: AMBE for DG9VH     Frames: 5.3s, Silence: 0.0%, BER: 0.0%
-	exec('(grep -v " /TIME" '.DSTARREPEATERLOGPATH.'/'.DSTARREPEATERLOGFILENAME.'$(date --utc +%Y-%m-%d).log|egrep -h "Stats|AMBE"|sort -r|head -15 >/tmp/last.log) 2>&1 &');
+	exec('(grep -v " /TIME" '.DSTARREPEATERLOGPATH.'/'.DSTARREPEATERLOGFILENAME.'$(date --utc +%Y-%m-%d).log|egrep -h "Stats|AMBE"|sort -r|head -15 >'.TMPPATH.'/last.log) 2>&1 &');
 	$ci = 0;
-	if ($LastLog = fopen("/tmp/last.log",'r')) {
+	if ($LastLog = fopen(TMPPATH."/last.log",'r')) {
 		while ($linkLine = fgets($LastLog)) {
 			if(preg_match_all('/^(.{22}).*Stats for (.*).*Frames: (.*).*s, Loss: (.*).*%, Packets:(.*)/',$linkLine,$linx) > 0){
 				$QSODate = substr($linx[1][0],3,21);
@@ -78,7 +78,7 @@
 			}
 		}
 
-		fclose($QSOInfoLog);
+		fclose($LastLog);
 	}
 ?>
 			</tbody>

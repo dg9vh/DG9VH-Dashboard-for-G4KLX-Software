@@ -113,4 +113,21 @@ define("ANONYMIZE", false);
 
 // set the anonymizer-salt if ANONYMIZE is true
 define("ANONSALT", "X");
+
+// set the path for the tempfiles, if you are using a ramdisk (recommended), put
+// in here the path to it, else use /tmp
+// to create a ramdisk of 1 Megabyte (would be enougth), use for example:
+// sudo mkdir /mnt/ramdisk
+// mount -t tmpfs -o size=1m tmpfs /mnt/ramdisk
+// vi /etc/fstab
+// add following line:
+// tmpfs       /mnt/ramdisk tmpfs   nodev,nosuid,noexec,nodiratime,size=1M   0 0
+
+// Edit this value
+$temppath = "/mnt/ramdisk";
+
+if (file_exists($temppath))
+	define("TMPPATH", $temppath);
+else
+	define("TMPPATH", "/tmp");
 ?>
