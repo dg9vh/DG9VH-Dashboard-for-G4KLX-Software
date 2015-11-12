@@ -128,8 +128,59 @@ function systemInfo() {
 	if (TEMPERATUREALERT && $cputemp > TEMPERATUREHIGHLEVEL) {
 ?>
 		<script>
+			function deleteLayer(id) {
+				if (document.getElementById && document.getElementById(id)) {
+					var theNode = document.getElementById(id);
+					theNode.parentNode.removeChild(theNode);
+				}
+				else if (document.all && document.all[id]) {
+					document.all[id].innerHTML='';
+					document.all[id].outerHTML='';
+				}
+				// OBSOLETE CODE FOR NETSCAPE 4 
+				else if (document.layers && document.layers[id]) {
+					document.layers[id].visibility='hide';
+					delete document.layers[id];
+				}
+			}
+
+			function makeLayer(id,L,T,W,H,bgColor,visible,zIndex) {
+				if (document.getElementById) {
+					if (document.getElementById(id)) {
+						alert ('Layer with this ID already exists!');
+						return;
+					}
+					var ST = 'position:absolute; text-align:center;padding-top:20px;'
+					+'; left:'+L+'px'
+					+'; top:'+T+'px'
+					+'; width:'+W+'px'
+					+'; height:'+H+'px'
+					+'; clip:rect(0,'+W+','+H+',0)'
+					+'; visibility:'
+					+(null==visible || 1==visible ? 'visible':'hidden')
+					+(null==zIndex  ? '' : '; z-index:'+zIndex)
+					+(null==bgColor ? '' : '; background-color:'+bgColor);
+
+					var LR = '<DIV id='+id+' style="'+ST+'">CPU-Temerature is very high!<br><input type="button" value="Close" onclick="deleteLayer(\'LYR1\')"></DIV>';
+
+					if (document.body) {
+						if (document.body.insertAdjacentHTML)
+							document.body.insertAdjacentHTML("BeforeEnd",LR);
+						else if (document.createElement && document.body.appendChild) {
+							var newNode = document.createElement('div');
+							newNode.setAttribute('id',id);
+							newNode.setAttribute('style',ST);
+							document.body.appendChild(newNode);
+						}
+					}
+				}
+			}
 			var audio = new Audio('sounds/alert.mp3');
 			audio.play();
+			var x = window.innerWidth/2-100;
+			var y = window.innerHeight/2-50;
+
+			makeLayer('LYR1',x,y,200,100,'red',1,1);
 		</script>
 <?php
 	}
@@ -303,46 +354,46 @@ function linksInfo($direction = "both") {
 	$tr = 0;
 	if ($linkLog = fopen(LINKLOGPATH,'r')) {
 		while ($linkLine = fgets($linkLog)) {
-			 $linkDate = "&nbsp;";
-			 $protocol = "&nbsp;";
-			 $linkType = "&nbsp;";
-			 $linkSource = "&nbsp;";
-			 $linkDest = "&nbsp;";
-			 $linkDir = "&nbsp;";
+			$linkDate = "&nbsp;";
+			$protocol = "&nbsp;";
+			$linkType = "&nbsp;";
+			$linkSource = "&nbsp;";
+			$linkDest = "&nbsp;";
+			$linkDir = "&nbsp;";
 // Reflector-Link, sample:
 // 2011-09-22 02:15:06: DExtra link - Type: Repeater Rptr: DB0LJ	B Refl: XRF023 A Dir: Outgoing
 // 2012-04-03 08:40:07: DPlus link - Type: Dongle Rptr: DB0ERK B Refl: REF006 D Dir: Outgoing
 // 2012-04-03 08:40:07: DCS link - Type: Repeater Rptr: DB0ERK C Refl: DCS001 C Dir: Outgoing
-			 if(preg_match_all('/^(.{19}).*(D[A-Za-z]*).*Type: ([A-Za-z]*).*Rptr: (.{8}).*Refl: (.{8}).*Dir: (.{8})/',$linkLine,$linx) > 0){
-				 $linkDate = $linx[1][0];
-				 $protocol = $linx[2][0];
-				 $linkType = $linx[3][0];
-				 $linkSource = $linx[4][0];
-				 $linkDest = getAnonymizedValue($linx[5][0]);
-				 $linkDir = $linx[6][0];
-			 }
+			if(preg_match_all('/^(.{19}).*(D[A-Za-z]*).*Type: ([A-Za-z]*).*Rptr: (.{8}).*Refl: (.{8}).*Dir: (.{8})/',$linkLine,$linx) > 0){
+				$linkDate = $linx[1][0];
+				$protocol = $linx[2][0];
+				$linkType = $linx[3][0];
+				$linkSource = $linx[4][0];
+				$linkDest = getAnonymizedValue($linx[5][0]);
+				$linkDir = $linx[6][0];
+			}
 // CCS-Link, sample:
-// 2013-03-30 23:21:53: CCS link - Rptr: PE1AGO C Remote: PE1KZU	 Dir: Incoming
-			 if(preg_match_all('/^(.{19}).*(CC[A-Za-z]*).*Rptr: (.{8}).*Remote: (.{8}).*Dir: (.{8})/',$linkLine,$linx) > 0){
-				 $linkDate = $linx[1][0];
-				 $protocol = $linx[2][0];
-				 $linkType = $linx[2][0];
-				 $linkSource = $linx[3][0];
-				 $linkDest = getAnonymizedValue($linx[4][0]);
-				 $linkDir = $linx[5][0];
+// 2013-03-30 23:21:53: CCS link - Rptr: PE1AGO C Remote: PE1KZU	Dir: Incoming
+			if(preg_match_all('/^(.{19}).*(CC[A-Za-z]*).*Rptr: (.{8}).*Remote: (.{8}).*Dir: (.{8})/',$linkLine,$linx) > 0){
+				$linkDate = $linx[1][0];
+				$protocol = $linx[2][0];
+				$linkType = $linx[2][0];
+				$linkSource = $linx[3][0];
+				$linkDest = getAnonymizedValue($linx[4][0]);
+				$linkDir = $linx[5][0];
 			}
 // Dongle-Link, sample: 
-// 2011-09-24 07:26:59: DPlus link - Type: Dongle User: DC1PIA	 Dir: Incoming
+// 2011-09-24 07:26:59: DPlus link - Type: Dongle User: DC1PIA	Dir: Incoming
 // 2012-03-14 21:32:18: DPlus link - Type: Dongle User: DC1PIA Dir: Incoming
-			 if(preg_match_all('/^(.{19}).*(D[A-Za-z]*).*Type: ([A-Za-z]*).*User: (.{6,8}).*Dir: (.*)$/',$linkLine,$linx) > 0){
-				 $linkDate = $linx[1][0];
-				 $protocol = $linx[2][0];
-				 $linkType = $linx[3][0];
-				 $linkSource = "&nbsp;";
-				 $linkDest = getAnonymizedValue($linx[4][0]);
-				 $linkDir = $linx[5][0];
-			 }
-			 if ($direction == "in" && $linkDir == "Incoming" || $direction == "out" && $linkDir == "Outgoing" || $direction == "both" ) {
+			if(preg_match_all('/^(.{19}).*(D[A-Za-z]*).*Type: ([A-Za-z]*).*User: (.{6,8}).*Dir: (.*)$/',$linkLine,$linx) > 0){
+				$linkDate = $linx[1][0];
+				$protocol = $linx[2][0];
+				$linkType = $linx[3][0];
+				$linkSource = "&nbsp;";
+				$linkDest = getAnonymizedValue($linx[4][0]);
+				$linkDir = $linx[5][0];
+			}
+			if ($direction == "in" && $linkDir == "Incoming" || $direction == "out" && $linkDir == "Outgoing" || $direction == "both" ) {
 				$position = array_search(substr($linkSource, -1), $repeaters);
 				unset($repeaters[$position]);
 				$ci++;
@@ -819,9 +870,9 @@ function lastHeardInfo() {
 <?php // Headers.log sample:
 // 0000000001111111111222222222233333333334444444444555555555566666666667777777777888888888899999999990000000000111111111122
 // 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901
-// 2012-06-05 12:18:41: DCS header - My: PU2ZHZ	/T		 Your: CQCQCQ		Rpt1: PU2ZHZ B	Rpt2: DCS007 B	Flags: 00 00 00
-// 2012-05-29 21:33:56: DPlus header - My: PD1RB	 /IC92	Your: CQCQCQ		Rpt1: PE1RJV B	Rpt2: REF017 A	Flags: 00 00 00
-// 2013-02-09 13:49:57: DExtra header - My: DO7MT	 /			Your: CQCQCQ		Rpt1: XRF001 G	Rpt2: XRF001 C	Flags: 00 00 00
+// 2012-06-05 12:18:41: DCS header - My: PU2ZHZ	/T		Your: CQCQCQ		Rpt1: PU2ZHZ B	Rpt2: DCS007 B	Flags: 00 00 00
+// 2012-05-29 21:33:56: DPlus header - My: PD1RB	/IC92	Your: CQCQCQ		Rpt1: PE1RJV B	Rpt2: REF017 A	Flags: 00 00 00
+// 2013-02-09 13:49:57: DExtra header - My: DO7MT	/			Your: CQCQCQ		Rpt1: XRF001 G	Rpt2: XRF001 C	Flags: 00 00 00
 //
 
 	exec('(grep -v " /TIME" '.HRDLOGPATH.'|sort -r -k7,7|sort -u -k7,8|sort -r|head -15 >'.TMPPATH.'/lastheard.log) 2>&1 &');
@@ -941,12 +992,12 @@ function remoteControl() {
 
 <?php
 	foreach ($repeaters AS $repeater) {
-		 $repeatercallsign = $configs['gatewayCallsign'];
-		 $callsignlength = strlen($repeatercallsign);
-		 for ($i = $callsignlength; $i < 7 ; $i++) 
-			 $repeatercallsign .=" ";
-		 $repeatercallsign = $repeatercallsign.$repeater;
-		 print "<option value=\"".$repeatercallsign."\">".$repeatercallsign."</option>";
+		$repeatercallsign = $configs['gatewayCallsign'];
+		$callsignlength = strlen($repeatercallsign);
+		for ($i = $callsignlength; $i < 7 ; $i++) 
+			$repeatercallsign .=" ";
+		$repeatercallsign = $repeatercallsign.$repeater;
+		print "<option value=\"".$repeatercallsign."\">".$repeatercallsign."</option>";
 	}
 
 ?>
