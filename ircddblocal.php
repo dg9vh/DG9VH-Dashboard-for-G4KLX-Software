@@ -130,4 +130,10 @@ if (file_exists($temppath))
 	define("TMPPATH", $temppath);
 else
 	define("TMPPATH", "/tmp");
+
+// set to true, if CPU-Tempwarnings should be alerted
+define("TEMPERATUREALERT",true);
+
+// set the temperature to alert above
+define("TEMPERATUREHIGHLEVEL", 60);
 ?>

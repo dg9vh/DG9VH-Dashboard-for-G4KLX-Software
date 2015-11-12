@@ -125,6 +125,15 @@ function systemInfo() {
 	exec("cat /sys/class/thermal/thermal_zone0/temp", $cputemp);
 	exec("cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq", $cpufreq);
 	$cputemp = $cputemp[0] / 1000;
+	if (TEMPERATUREALERT && $cputemp > TEMPERATUREHIGHLEVEL) {
+?>
+		<script>
+			var audio = new Audio('sounds/alert.mp3');
+			audio.play();
+		</script>
+<?php
+	}
+
 	$cpufreq = $cpufreq[0] / 1000;
 
 	$output = shell_exec('cat /proc/loadavg');
