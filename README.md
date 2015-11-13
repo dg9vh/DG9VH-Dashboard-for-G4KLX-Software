@@ -5,20 +5,20 @@ E-Mail: dg9vh@darc.de
 
 Introduction:
 -------------
-This script realizes a dashboard for g4klx-D-Star-Gateways and 
--Repeaters. It is based on the Files introduced at 
+This script realizes a dashboard for g4klx-D-Star-gateways and 
+-repeaters. It is based on the files introduced at 
 http://www.dstar101.com/dashboard.htm
 
 Installation:
 -------------
-Requirements:	- running installation of php5 and www-server like 
-		  lighttpd
+Requirements:	
+		- running installation of php5 and www-server like lighttpd
 		- running installation of g4klx gateway and repeater
-		- make sure you have GUI Log enabled!
+		- make sure you have logs enabled in gateway and repeater-config!
 
 How to install:
 ---------------
-Simply untar the files into the folder of your www-server (mostly 
+Simply put the files into the folder of your www-server (mostly 
 /var/www) and check file-system-permissions - files and folders should 
 be readable by webserver-user. 
 
@@ -48,11 +48,18 @@ constants' values to your individual fits. You can switch the links to
 QRZ.com, Google-Maps and APRS.fi on or off by setting the corresponding 
 value to true or false.
 
+For configuring the remote-control please take a look at PDF located in
+"docs/Configuring Remote Control and dashboard-remotecontrol-section.pdf"
+
 Performance-tuning:
 -------------------
 To get more performance into the processing be shure to have the 
 logfiles of the gateway and repeater within a log-rotation. Especially 
 header.log would sometimes grow up into infinitive.
+
+It is also recommended to activate a ramdisk on linux-systems for longer
+lifetime of sd-cards in Raspberry Pi-systems. Configuration see
+ircddblocal.php
 
 A few words about security:
 ---------------------------
@@ -67,7 +74,8 @@ How to get in contact with author:
 ---------------------------------- 
 You can reach me by e-mail (see above) or via D-Star (DG9VH), regularly 
 in "DCS001 C", "DCS002 S" or "XRF232 A" xreflector-room. You could also 
-call me directly in D-Star via CCS7-Number: (262) 5094
+call me directly in D-Star via CCS7-Number: (262) 5094. You'll find me
+also in DMR+-network.
 
 Comments and constructive ideas wellcome!
 
