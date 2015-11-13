@@ -46,7 +46,7 @@ function head() {
 		<!-- Das neueste kompilierte und minimierte JavaScript -->
 		<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>-->
 		<link rel="stylesheet" type="text/css" href="ircddb.css">
-		<meta http-equiv="refresh" content="60">
+		<meta http-equiv="refresh" content="<?php echo GLOBALPAGERELOADTIME;?>">
 	</head>
 	<body>
 	<div class="container-fluid">

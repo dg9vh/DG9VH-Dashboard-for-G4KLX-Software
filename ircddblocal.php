@@ -64,6 +64,9 @@ switch (DISTRIBUTION) {
 define("CONFIGFILENAME","ircddbgateway");
 define("GATEWAYCONFIGPATH", CONFIGPATH."/".CONFIGFILENAME);
 
+// enter time in seconds to start the global page reload
+define("GLOBALPAGERELOADTIME","60");
+
 // enter your Contact-E-Mail-Address to be shown at page
 define("EMAILADDRESS", "dg9vh@darc.de");
 
