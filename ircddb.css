@@ -44,7 +44,7 @@ color: white;
 font-size: 16px;
 }
 
-th.calls {
+.calls {
 width: 16.7%;
 }
 
@@ -52,11 +52,11 @@ th.gatewayinfo {
 width: 12.5%
 }
 
-tr.row0 {
+.row0 {
 background-color: #cdc5c5;
 }
 
-tr.row1 {
+.row1 {
 background-color: #919191;
 }
 
@@ -65,5 +65,5 @@ color: #000000;
 }
 
 .progress {
-margin-bottom: 0px;
+margin-bottom: 0;
 }
