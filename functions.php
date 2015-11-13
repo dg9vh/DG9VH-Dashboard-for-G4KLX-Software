@@ -80,13 +80,14 @@ function gatewayInfo() {
 					<th>APRS-Host</th>
 				</tr>
 				<tr class="gatewayinfo">
-	<?php print "					<td>$configs[description1]\n$configs[description2]</td>\n";
+<?php 
+		print "					<td>".$configs[description1]."\n".$configs[description2]."</td>\n";
 		if (SHOWGATEWAYPOSITION)
-			print "					<td><a href=\"https://www.google.de/maps/place/$configs[latitude]N+$configs[longitude]E/@$configs[latitude],$configs[longitude],17z\">$configs[latitude]\n$configs[longitude]</a></td>\n";
+			print "					<td><a href=\"https://www.google.de/maps/place/".$configs[latitude]."N+".$configs[longitude]."E/@".$configs[latitude].",".$configs[longitude].",17z\">".$configs[latitude]."\n".$configs[longitude]."</a></td>\n";
 		else
-			print "					<td>$configs[latitude]\n$configs[longitude]</td>\n";
-		print "					<td>$configs[ircddbHostname]</td>\n";
-		if($configs['aprsEnabled'] == 1){ print "<td>$configs[aprsHostname]</td>"; } else { print "<td><img src=\"images/20red.png\"></td>";}
+			print "					<td>".$configs[latitude]."\n".$configs[longitude]."</td>\n";
+		print "					<td>".$configs[ircddbHostname]."</td>\n";
+		if($configs['aprsEnabled'] == 1){ print "<td>".$configs[aprsHostname]."</td>"; } else { print "<td><img src=\"images/20red.png\"></td>";}
 ?>
 				</tr>
 			</tbody>
@@ -304,7 +305,8 @@ function repeaterInfo() {
 			if($configs[$param] == 1){print "<td>Yes<br>"; } else { print "<td>No <br>"; }
 			$param="reconnect" . $i;
 			$reconnect = $configs[$param];
-			$t = $configs[$param]; print "$tot[$t]";
+			$t = $configs[$param]; 
+			print $tot[$t];
 		}
 	}
 ?>
