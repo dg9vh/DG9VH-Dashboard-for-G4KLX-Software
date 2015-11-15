@@ -229,7 +229,6 @@ function systemInfo() {
 					<td><?php echo $cputemp; ?> &deg;C</td>
 					<td><?php echo $cpufreq; ?> MHz</td>
 					<td><?php echo $sysload; ?> %</td>
-					<!--<td><?php echo $cpuusage; ?> %</td>-->
 					<td>
 <?php
 	if (SHOWPROGRESSBARS) {
