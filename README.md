@@ -25,7 +25,7 @@ be readable by webserver-user.
 Customize ircddblocal.php to your specific needs according to your 
 individual installation of g4klx-software.
 
-For detailled Step-By-Step-Guide see STEP-BY-STEP.txt.
+For detailled Step-By-Step-Guide see docs/STEP-BY-STEP.txt.
 
 How to run:
 -----------
