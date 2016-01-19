@@ -898,7 +898,7 @@ function lastHeardInfo() {
 					print "<td>$MyCall";
 
 				if (SHOWAPRS AND !ANONYMIZE)
-					print " <a title=\"Show location of $MyCall on aprs.fi\" href=\"http://aprs.fi/#!call=i%2F".str_replace(" ", "%20", $MyCall)."\"><img alt=\"APRS-Position\" src=\"images/position16x16.gif\"></a></td>";
+					print " <a title=\"Show location of $MyCall on aprs.fi\" href=\"http://aprs.fi/#!call=".str_replace(" ", "%20", $MyCall)."\"><img alt=\"APRS-Position\" src=\"images/position16x16.gif\"></a></td>";
 				else
 					print "</td>";
 
@@ -906,7 +906,7 @@ function lastHeardInfo() {
 				print "<td>$YourCall</td>";
 
 				if (SHOWAPRS AND !ANONYMIZE)
-					print "<td>$Rpt1 <a title=\"Show location of $Rpt1 on aprs.fi\" href=\"http://aprs.fi/#!call=i%2F".str_replace(" ", "%20", $Rpt1)."\"><img alt=\"APRS-Position\" src=\"images/position16x16.gif\"></a></td>";
+					print "<td>$Rpt1 <a title=\"Show location of $Rpt1 on aprs.fi\" href=\"http://aprs.fi/#!call=".str_replace(" ", "%20", $Rpt1)."\"><img alt=\"APRS-Position\" src=\"images/position16x16.gif\"></a></td>";
 				else
 					print "<td>$Rpt1</td>";
 
