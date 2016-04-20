@@ -12,7 +12,9 @@
 <?php linksInfo("out"); // uncomment this for outgoing links in own table ?>
 <?php remoteControl(); // see comment in ircddblocal.php ?>
 <?php //txingInfo(); ?>
-<?php txingInfoAjax(); ?>
+<?php //txingInfoAjax(); ?>
+<?php //MMDVMTxingInfo(); ?>
+<?php MMDVMTxingInfoAjax(); ?>
 <?php inQSOInfo(); ?>
 <?php lastTransmissionsInfo(); ?>
 <?php localTrafficInfo(); ?>

@@ -64,6 +64,13 @@ switch (DISTRIBUTION) {
 define("CONFIGFILENAME","ircddbgateway");
 define("GATEWAYCONFIGPATH", CONFIGPATH."/".CONFIGFILENAME);
 
+
+// set to true if Repeater is MMDVMHost
+define("USEMMDVMHOST",true);
+
+// configure location of MMDVM.ini
+define("MMDVMINIPATH", "/opt/mmdvm/");
+
 // enter time in seconds to start the global page reload
 define("GLOBALPAGERELOADTIME","60");
 

@@ -15,6 +15,17 @@ function initialize() {
 				$configs[$key] = $value;
 		}
 	}
+	
+	global $mmdvmconfigs;
+	if (USEMMDVMHOST) {
+		if ($configfile = fopen(MMDVMINIPATH."MMDVM.ini", 'r')) {
+			while ($line = fgets($configfile)) {
+				list($key,$value) = split("=",$line);
+				$value = trim(str_replace('"','',$value));
+				$mmdvmconfigs[$key] = $value;
+			}
+		}
+	}
 	global $MYCALL;
 	$MYCALL=strtoupper($configs['gatewayCallsign']);
 }
@@ -497,6 +508,58 @@ function txingInfo() {
 <?php
 }
 
+function MMDVMTxingInfo() {
+	global $mmdvmconfigs;
+?>
+		<H4>Currently transmitting (MMDVM):</H4>
+		<table class="table-bordered">
+			<tbody>
+				<tr>
+					<th class="calls">Date &amp; Time (UTC)</th>
+					<th class="calls">Call</th>
+					<th class="calls">ID</th>
+					<th class="calls">Yourcall</th>
+				</tr>
+<?php // MMDVM-xxxxx-xx-xx.log sample:
+// 0000000001111111111222222222233333333334444444444555555555566666666667777777777888888888899999999990000000000111111111122
+// 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901
+// M: 2016-04-20 16:55:00.435 D-Star, received RF header from DG9VH   /ID51 to CQCQCQ
+// M: 2016-04-20 17:16:30.140 D-Star, received RF header from DG9VH   /ID51 to        I
+	$filepath = $mmdvmconfigs['FilePath'];
+	$fileroot = $mmdvmconfigs['FileRoot'];
+	exec('(grep -v "  /TIME" '.$filepath.$fileroot.'-$(date --utc +%Y-%m-%d).log|tail -n1 >'.TMPPATH.'/lasttxing.log) 2>&1 &');
+	$ci = 0;
+	if ($LastTXLog = fopen(TMPPATH."/lasttxing.log",'r')) {
+		while ($linkLine = fgets($LastTXLog)) {
+			if(preg_match_all('/^(.{22}).*from (.*).*to (.*)$/',$linkLine,$linx) > 0){
+			$ci++;
+			if($ci > 1) { $ci = 0; }
+			print "<tr class=\"row".$ci."\">";
+			$QSODate = substr($linx[1][0],2,21);
+			$MyCall = getAnonymizedValue(substr($linx[2][0],0,8));
+			$MyId = getAnonymizedValue(substr($linx[2][0],9,4));
+			$YourCall = $linx[3][0];
+			print "<Td>$QSODate</td>";
+
+			if (SHOWQRZ)
+				print "<td><a title=\"Ask QRZ.com about $MyCall\" href=\"http://qrz.com/db/$MyCall\">".trim($MyCall)."</a></td>";
+			else
+				print "<td>$MyCall</td>";
+
+			print "<td>$MyId</td>";
+			print "<td>$YourCall</td>";
+			print "</tr>";
+		}
+	}
+	fclose($LastTXLog);
+}
+?>
+			</tbody>
+		</table>
+<?php
+}
+
+
 function inQSOInfo() {
 ?>
 		<H4>Currently maybe in QSO:</H4>
@@ -832,6 +895,95 @@ function txingInfoAjax() {
 					}
 				}
 				xmlhttp.open("GET","currentTX.php",true);
+				xmlhttp.send();
+<?php
+	if (RELOADAFTERTX) {
+?>
+				if (document.getElementById("txcall") != null)
+					transmitting = true;
+				else if (transmitting) {
+					refreshInQSOAndLastHeardList();
+					transmitting = false;
+				}
+<?php
+	}
+?>
+				
+				var timeout = window.setTimeout("loadXMLDoc()", <?php echo RELOADTIMEINMS; ?>);
+			}
+
+			loadXMLDoc();
+		</script>
+<?php
+}
+
+
+function MMDVMTxingInfoAjax() {
+?>
+		<H4>Currently transmitting (MMDVM):</H4>
+		<table class="table-bordered">
+			<tbody>
+				<tr>
+					<th>Date &amp; Time (UTC)</th>
+					<th class="calls">Call</th>
+					<th class="calls">ID</th>
+					<th>Yourcall</th>
+<?php
+	if (SHOWPROGRESSBARS) {
+?>
+					<th>TX-Seconds</th>
+<?php
+	}
+?>
+				</tr>
+				<tr class="row1" id="txline">
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+
+	<script>
+			function doXMLHTTPRequest(scriptname, elem) {
+				var xmlhttp;
+				if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+					xmlhttp=new XMLHttpRequest();
+				} else {// code for IE6, IE5
+					xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				xmlhttp.onreadystatechange=function() {
+					if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+						document.getElementById(elem).innerHTML=xmlhttp.responseText;
+					}
+				}
+				xmlhttp.open("GET",scriptname,true);
+				xmlhttp.send();
+			}
+
+			function refreshInQSOAndLastHeardList() {
+				doXMLHTTPRequest("refreshInQSO.php","inqso");
+				doXMLHTTPRequest("refreshLastTX.php","lasttx");
+				doXMLHTTPRequest("refreshLastHeardList.php","lastheard");
+				doXMLHTTPRequest("refreshLocalTraffic.php","localtraffic");
+			}
+
+			var transmitting = false;
+			function loadXMLDoc() {
+				
+				var xmlhttp;
+				if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+					xmlhttp=new XMLHttpRequest();
+				} else {// code for IE6, IE5
+					xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				xmlhttp.onreadystatechange=function() {
+					if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+						document.getElementById("txline").innerHTML=xmlhttp.responseText;
+					}
+				}
+				xmlhttp.open("GET","currentMMDVMTX.php",true);
 				xmlhttp.send();
 <?php
 	if (RELOADAFTERTX) {
