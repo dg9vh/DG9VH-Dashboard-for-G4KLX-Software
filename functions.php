@@ -527,7 +527,7 @@ function MMDVMTxingInfo() {
 // M: 2016-04-20 17:16:30.140 D-Star, received RF header from DG9VH   /ID51 to        I
 	$filepath = $mmdvmconfigs['FilePath'];
 	$fileroot = $mmdvmconfigs['FileRoot'];
-	exec('(grep -v "  /TIME" '.$filepath.$fileroot.'-$(date --utc +%Y-%m-%d).log|tail -n1 >'.TMPPATH.'/lasttxing.log) 2>&1 &');
+	exec('(grep -v "  /TIME" '.$filepath.$fileroot.'-$(date --utc +%Y-%m-%d).log|tail -n1 |grep D-Star >'.TMPPATH.'/lasttxing.log) 2>&1 &');
 	$ci = 0;
 	if ($LastTXLog = fopen(TMPPATH."/lasttxing.log",'r')) {
 		while ($linkLine = fgets($LastTXLog)) {

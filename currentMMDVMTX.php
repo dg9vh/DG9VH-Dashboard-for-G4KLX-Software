@@ -21,7 +21,7 @@ function txingInfo() {
 // M: 2015-08-18 19:24:40: Stats for DL1ESZ    Frames: 17.8s, Loss: 1.2%, Packets: 11/890
 	$filepath = $mmdvmconfigs['FilePath'];
 	$fileroot = $mmdvmconfigs['FileRoot'];
-	exec('(grep -v "  /TIME" '.$filepath.$fileroot.'-$(date --utc +%Y-%m-%d).log|tail -n1 >'.TMPPATH.'/lasttxing.log) 2>&1 &');
+	exec('(grep -v "  /TIME" '.$filepath.$fileroot.'-$(date --utc +%Y-%m-%d).log|tail -n1 |grep D-Star >'.TMPPATH.'/lasttxing.log) 2>&1 &');
 	
 	$ci = 0;
 
